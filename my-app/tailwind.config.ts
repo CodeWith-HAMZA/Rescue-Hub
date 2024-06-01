@@ -1,6 +1,7 @@
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
+import colors from "tailwindcss/colors";
 
 import type { Config } from "tailwindcss";
 
@@ -11,9 +12,12 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
   ],
   prefix: "",
   theme: {
+    transparent: "transparent",
+    current: "currentColor",
     container: {
       center: true,
       padding: "2rem",
@@ -32,9 +36,34 @@ const config = {
         fourth: "moveHorizontal 40s ease infinite",
         fifth: "moveInCircle 20s ease infinite",
         scroll:
-        "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
       },
       colors: {
+        tremor: {
+          brand: {
+            faint: colors.blue[50],
+            muted: colors.blue[200],
+            subtle: colors.blue[400],
+            DEFAULT: colors.blue[500],
+            emphasis: colors.blue[700],
+            inverted: colors.white,
+          },
+          background: {
+            muted: colors.gray[50],
+            subtle: colors.gray[100],
+            DEFAULT: colors.white,
+            emphasis: colors.gray[700],
+          },
+          border: { DEFAULT: colors.gray[200] },
+          ring: { DEFAULT: colors.gray[200] },
+          content: {
+            subtle: colors.gray[400],
+            DEFAULT: colors.gray[500],
+            emphasis: colors.gray[700],
+            strong: colors.gray[900],
+            inverted: colors.white,
+          },
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

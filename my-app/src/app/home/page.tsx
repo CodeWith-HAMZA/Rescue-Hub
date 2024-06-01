@@ -9,6 +9,7 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animations";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { CardsInfiniteMoving } from "@/components/home-page/InfiniteMovingCards";
 import { Gallery } from "@/components/home-page/Gallery";
+import Footer from "@/components/shared/Footer";
 export default function page() {
   return (
     <div>
@@ -29,8 +30,8 @@ export default function page() {
           <div className="font-extralight text-base md:text-4xl dark:text-neutral-200 py-4">
             And this, is chemical burn.
           </div>
-          <button className="bg-black dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2">
-            Debug now
+          <button className="bg-black hover:opacity-80 transition-all dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2">
+            Explore Applicants
           </button>
         </motion.div>
       </AuroraBackground>
@@ -57,6 +58,7 @@ export default function page() {
           </p>
         </div>
       </BackgroundGradientAnimation>
+      <Footer/>
     </div>
   );
 }

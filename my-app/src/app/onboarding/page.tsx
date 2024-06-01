@@ -36,7 +36,9 @@ export default function Onboarding() {
         !data.password ||
         !data.confirmPassword ||
         !data.gender ||
-        !data.dateOfBirth
+        !data.dateOfBirth ||
+        !data.bio     
+         
       ) {
         toast.error("Please fill in all required fields");
         return;
@@ -92,7 +94,9 @@ export default function Onboarding() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
-                  placeholder="john@example.com"
+                   value={'23@gmail.com'}
+                   contentEditable={false} 
+                   
                   type="email"
                   {...register("email", { required: "Email is required" })}
                 />
@@ -106,15 +110,15 @@ export default function Onboarding() {
                   {...register("fullname")}
                 />
               </div>
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label htmlFor="lastname">Last Name</Label>
                 <Input
                   id="lastname"
                   placeholder="Enter your last name"
                   {...register("lastname")}
                 />
-              </div>
-              <div className="space-y-2">
+              </div> */}
+              {/* <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
@@ -146,7 +150,7 @@ export default function Onboarding() {
                 {errors.confirmPassword && (
                   <ErrorText>{errors.confirmPassword.message}</ErrorText>
                 )}
-              </div>
+              </div> */}
               <div className="space-y-2">
                 <Label htmlFor="gender">Gender</Label>
                 <select
