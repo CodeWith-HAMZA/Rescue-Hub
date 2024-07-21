@@ -1,3 +1,4 @@
+"use client";
 import ApplicantCard from "@/components/cards/ApplicantCard";
 import {
   Accordion,
@@ -8,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { getApplications } from "@/services/applicants";
 import {
   BotIcon,
   CalendarIcon,
@@ -21,12 +23,29 @@ import {
   StarIcon,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { BiRightArrow, BiSolidRightArrow } from "react-icons/bi";
 import { MdCheckBox } from "react-icons/md";
 
 export default function ApplicantsList() {
+  const r = useRouter();
+  const [applications, setApplications] = useState()
+  useEffect(() => {
+getApplications().then(_ => {
+console.log(_, ' app')
+  setApplications(_)
+})
+  }, [])
   return (
     <>
+      <Button
+        onClick={() => r.push("/applicants/create")}
+        className="flex ml-auto mr-4 mt-4 items-center gap-1"
+      >
+        <span> My Applications </span>
+        <BiSolidRightArrow />
+      </Button>
       <div className="grid grid-cols-[240px_1fr] gap-8 p-8">
         <div className="flex flex-col gap-6">
           <div className="grid gap-4">

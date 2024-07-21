@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
@@ -18,6 +19,11 @@ import { Toaster } from "sonner";
 import { Navbar } from "@/components/shared/Navbar";
 import Header, { AuthProfile } from "@/components/shared/Header";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import CheckIsOnboarded from "@/components/CheckIsOnboarded";
+import TanStackQueryProvider from "@/providers";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,18 +40,28 @@ export default function RootLayout({
             fontSans.variable
           )}
         >
-          <Toaster />
-
-          <Header>
-            {/* <AuthProfile /> */}
-            <SignedOut>
-              {/* <SignInButton afterSignUpUrl="/onboarding/continue" afterSignInUrl="/" mode="redirect" /> */}
-              <SignUpButton className="bg-black rounded-md text-white hover:opacity-80 transition-all px-3 py-1.5" afterSignUpUrl="/onboarding/continue" afterSignInUrl="/" mode="redirect" />
-            </SignedOut>
-            <SignedIn>
-              <UserButton appearance={{variables: {colorText: "black"}}} />
+          <TanStackQueryProvider>
+            <Toaster />
+            <SignedIn>  
             </SignedIn>
-          </Header>
+            <Header>
+              {/* <AuthProfile /> */}
+              <SignedOut>
+                {/* <SignInButton afterSignUpUrl="/onboarding/continue" afterSignInUrl="/" mode="redirect" /> */}
+                <SignUpButton
+                  className="bg-black rounded-md text-white hover:opacity-80 transition-all px-3 py-1.5"
+                  afterSignUpUrl="/onboarding/continue"
+                  afterSignInUrl="/"
+                  mode="redirect"
+                />
+              </SignedOut>
+              <SignedIn>
+                <UserButton
+                  appearance={{ variables: { colorText: "black" } }}
+                />
+              </SignedIn>
+            </Header>
+          </TanStackQueryProvider>
           <main>{children}</main>
         </body>
       </html>

@@ -22,7 +22,7 @@ router.post("/", auth, async (req, res) => {
     const application = await Application.create({
       userId: req.user.id,
       description,
-      status,
+      // status,
       city,
       country,
       contactName,
@@ -47,10 +47,23 @@ router.get("/", auth, async (req, res) => {
     });
 
     // Return the applications
-   return res.json(applications);
+    return res.json(applications);
   } catch (err) {
     console.error(err.message);
-   return res.status(500).send("Server Error");
+    return res.status(500).send("Server Error");
+  }
+});
+//
+router.get("/all", async (req, res) => {
+  try {
+    // Fetch applications for the authenticated user
+    const applications = await Application.findAll({});
+
+    // Return the applications
+    return res.json(applications);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Server Error");
   }
 });
 

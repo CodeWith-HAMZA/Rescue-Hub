@@ -36,7 +36,7 @@ const User = sequelize.define(
       defaultValue: false,
     },
     // Additional featured fields
-    fullName: {
+    fullName: { 
       type: DataTypes.STRING,
       allowNull: true,
     },

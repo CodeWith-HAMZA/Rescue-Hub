@@ -10,11 +10,15 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { BiRightArrow } from "react-icons/bi";
 import { TbArrowNarrowRight } from "react-icons/tb";
-const ErrorText = ({ children } ) => {
+import { NextPage } from "next";
+import { onBoard } from "@/services/users";
+import { PiSpinner } from "react-icons/pi";
+import { useRouter } from "next/navigation";
+const ErrorText = ({ children }) => {
   return <p className="text-red-400 text-sm">{children}</p>;
 };
 
-export default function Onboarding() {
+export default function Onboarding({ searchParams }) {
   const {
     register,
     handleSubmit,
@@ -23,51 +27,32 @@ export default function Onboarding() {
   } = useForm();
   const [submitting, setSubmitting] = useState(false);
   const password = useRef({});
-  password.current = watch("password", "");
 
+  const router = useRouter()
   const onSubmit = async (data) => {
     try {
       setSubmitting(true);
       // Your form submission logic goes here
 
-      // Validate all fields manually
-      if (
-        !data.email ||
-        !data.password ||
-        !data.confirmPassword ||
-        !data.gender ||
-        !data.dateOfBirth ||
-        !data.bio     
-         
-      ) {
-        toast.error("Please fill in all required fields");
-        return;
-      }
+      console.log(data);
+      // fullName, address, phoneNumber, profilePicture, bio
 
-      // Check if password and confirm password match
-      if (data.password !== data.confirmPassword) {
-        toast.error("Passwords do not match");
-        return;
-      }
-
-      // Validate email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(data.email)) {
-        toast.error("Invalid email format");
-        return;
-      }
-
-      // Additional custom validations can be added here
-
-      // If all validations pass, log the form data
+      await onBoard({
+        fullName: searchParams?.fullName,
+        address: data?.address,
+        phoneNumber: data?.phone,
+        profilePicture: searchParams?.img,
+        bio: data?.bio,
+      } as any);
+      setSubmitting(false);
+      toast.success("Successfully Completed Your Profile!")
       console.log("Form data:", data);
+      router.push("/home")
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
       setSubmitting(false);
-    }
-
-    setSubmitting(true);
+    } 
     // Your form submission logic goes here
   };
 
@@ -94,19 +79,19 @@ export default function Onboarding() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
-                   value={'23@gmail.com'}
-                   contentEditable={false} 
-                   
+                  value={searchParams?.email}
+                  contentEditable={false}
                   type="email"
                   {...register("email", { required: "Email is required" })}
                 />
                 {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="fullname">Full Name</Label>
+                <Label htmlFor="fullname">Full Name/Username</Label>
                 <Input
                   id="fullname"
                   placeholder="Enter your full name"
+                  value={searchParams?.fullName}
                   {...register("fullname")}
                 />
               </div>
@@ -152,49 +137,64 @@ export default function Onboarding() {
                 )}
               </div> */}
               <div className="space-y-2">
-                <Label htmlFor="gender">Gender</Label>
-                <select
-                  id="gender"
-                  {...register("gender", { required: "Gender is required" })}
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-                {errors.gender && (
-                  <ErrorText>{errors.gender.message}</ErrorText>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                <Label htmlFor="phone">Phone:</Label>
                 <Input
-                  id="dateOfBirth"
-                  type="date"
-                  {...register("dateOfBirth", {
-                    required: "Date of Birth is required",
+                  id="phone"
+                  type="number"
+                  placeholder="XXXX-XXXXXXX"
+                  {...register("phone", {
+                    required: "Phone No. is required",
+                    minLength: {
+                      value: 11,
+                      message: "Kindly enter valid Phone",
+                    },
                   })}
                 />
-                {errors.dateOfBirth && (
-                  <ErrorText>{errors.dateOfBirth.message}</ErrorText>
-                )}
+
+                {errors.phone && <ErrorText>{errors.phone.message}</ErrorText>}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
+                <Label htmlFor="address">Address</Label>
+                <Textarea
+                  className="min-h-[100px]"
+                  id="address"
+                  placeholder="Enter your Address"
+                  {...register("address", {
+                    required: {
+                      value: true,
+                      message: "Your Address Is Required",
+                    },
+                  })}
+                />
+                {errors.address && (
+                  <ErrorText>{errors.address.message}</ErrorText>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="address">Bio</Label>
                 <Textarea
                   className="min-h-[100px]"
                   id="bio"
-                  placeholder="Enter your bio"
-                  {...register("bio")}
+                  placeholder="Enter your Bio"
+                  {...register("bio", {
+                    required: {
+                      value: true,
+                      message: "Your Bio Is Required",
+                    },
+                  })}
                 />
+                {errors.bio && <ErrorText>{errors.bio.message}</ErrorText>}
               </div>
             </div>
             <Button type="submit" className="w-full" disabled={submitting}>
-              Continue &nbsp; <TbArrowNarrowRight size={20} />
+              Complete Profile &nbsp;{" "}
+              {submitting && (
+                <PiSpinner className="animate-spin  b" size={20} />
+              )}
             </Button>
             <Link
-              className="inline-flex items-center justify-center rounded-md border border-gray-200 border-gray-200 bg-white h-10 w-full px-4 text-sm shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 dark:border-gray-800 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-950 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
+              className="inline-flex items-center justify-center rounded-md border border-gray-200  bg-white h-10 w-full px-4 text-sm shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 dark:border-gray-800 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-950 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
               href="#"
             >
               Continue without an account

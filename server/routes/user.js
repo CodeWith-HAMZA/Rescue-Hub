@@ -14,6 +14,8 @@ router.post("/register", register);
 
 // Login route
 router.post("/login", login);
+ 
+
 
 // Onboarding route
 router.put("/onboard", auth, onBoarded);

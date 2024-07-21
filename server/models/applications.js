@@ -14,6 +14,9 @@ const Application = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
+
+    //
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -74,10 +77,12 @@ const Application = sequelize.define(
       allowNull: true,
     },
   },
+
+  //
   {
     // Disable Sequelize's pluralization of model names
     // freezeTableName: true,
-
+//
     // Include timestamps
     timestamps: true,
     createdAt: "created_at",

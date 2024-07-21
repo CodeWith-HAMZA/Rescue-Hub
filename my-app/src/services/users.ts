@@ -1,32 +1,58 @@
-import User from '@/interfaces/user';
-import axiosInstance from './index';
- 
+import User from "@/interfaces/user";
+import axiosInstance from "./index";
 interface AuthResponse {
   token: string;
   user: User;
 }
 
 // Register user
-export const registerUser = async (userData: Omit<User, 'id' | 'isAdmin' | 'isOnboarded'>): Promise<AuthResponse> => {
-  const response = await axiosInstance.post<AuthResponse>('/auth/register', userData);
+export const registerUser = async (
+  userData: Omit<User, "id" | "isAdmin" | "isOnboarded">
+): Promise<AuthResponse> => {
+  const response = await axiosInstance.post<AuthResponse>(
+    "/user/register",
+    userData
+  );
+  localStorage.setItem("token", response.data.token);
+
+  return response.data;
+};
+export const onBoard = async (
+  userData: Omit<User, "id" | "isAdmin" | "isOnboarded">
+): Promise<AuthResponse> => {
+  const response = await axiosInstance.put<AuthResponse>(
+    "/user/onboard",
+    userData,
+    { headers: { Authorization: localStorage.getItem("token") } }
+  );
   return response.data;
 };
 
 // Login user
-export const loginUser = async (credentials: { email: string; password: string; }): Promise<AuthResponse> => {
-  const response = await axiosInstance.post<AuthResponse>('/auth/login', credentials);
+export const loginUser = async (credentials: {
+  email: string;
+  password: string;
+}): Promise<AuthResponse> => {
+  const response = await axiosInstance.post<AuthResponse>(
+    "/auth/login",
+    credentials
+  );
   return response.data;
 };
 
 // Get user profile
 export const getUserProfile = async (): Promise<User> => {
-  const response = await axiosInstance.get<User>('/user/profile');
+  const response = await axiosInstance.get<User>("/user/profile", {
+    headers: { Authorization: localStorage.getItem('token') },
+  });
   return response.data;
 };
 
 // Update user profile (Onboarding)
-export const updateUserProfile = async (userData: Partial<Omit<User, 'id' | 'isAdmin' | 'isOnboarded'>>): Promise<User> => {
-  const response = await axiosInstance.put<User>('/user/profile', userData);
+export const updateUserProfile = async (
+  userData: Partial<Omit<User, "id" | "isAdmin" | "isOnboarded">>
+): Promise<User> => {
+  const response = await axiosInstance.put<User>("/user/profile", userData);
   return response.data;
 };
 
@@ -41,4 +67,3 @@ export const updateUserProfile = async (userData: Partial<Omit<User, 'id' | 'isA
 //   profilePicture: 'https://example.com/profile.jpg',
 //   bio: 'Hello, I am a new user!',
 // });
-
