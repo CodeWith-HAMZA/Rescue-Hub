@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Card,
   CardHeader,
@@ -35,6 +34,9 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { PiSpinner } from "react-icons/pi";
+import { useCreateApplication } from "@/hooks/api/applications/mutations/useCreateApplication";
+import FilePreview from "@/components/FilePreview";
+import { uploadFiles } from "@/lib/utils";
 
 const schema = z.object({
   description: z.string().min(1, "Description is required"),
@@ -43,8 +45,8 @@ const schema = z.object({
   // }),
   city: z.string().min(1, "City is required"),
   country: z.string().min(1, "Country is required"),
-  contactName: z.string().min(1, "Contact Name is required"),
-  contactPhone: z.string().min(1, "Contact Phone is required"),
+  contactName: z.string().min(1, "Emmergency Contact Name is required"),
+  contactPhone: z.string().min(1, "Emergency Contact Phone is required"),
   contactEmail: z.string().email("Invalid email address"),
   magnitude: z.string().min(1, "Magnitude is required"),
   earthquakeLocation: z.string().min(1, "Earthquake Location is required"),
@@ -57,6 +59,7 @@ const schema = z.object({
 });
 
 export default function ApplicationForm() {
+  const [SelectedFiles, setSelectedFiles] = useState<File[]>([]);
   const {
     handleSubmit,
     control,
@@ -64,39 +67,25 @@ export default function ApplicationForm() {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  const [loading, setLoading] = useState(false);
-  // const { createApplicationMutation } = useApplication();
-  // const res = useQuery({
-  //   queryKey: ["thi"],
-  //   queryFn: async () => {
-  //     const { data } = await axios.get("https://dummyjson.com/test");
-  //     return data;
-  //   },
-  // });
+
+  const userApplicationMutation = useCreateApplication();
 
   // pending", "processing", "eligible", "not_eligible
-  const onSubmit = async (data) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    console.log(data, " h");
 
-    // createApplicationMutation.mutate(data, {
-    //   onSuccess(data, variables, context) {
-    //     toast.success("Successfully Applied For Natural Disaster Emergency");
-    //   },
-    //   onError(data, variables, context) {
-    //     toast.error("Something went wrong");
-    //   },
-    // });
-    setLoading(true);
-    const res = await createApplication({ ...data });
-    setLoading(false);
-
+    const userApplication = userApplicationMutation.mutate({
+      ...data,
+      mediaFiles: SelectedFiles,
+    });
+    console.log(userApplication, " application");
     toast.success("Successfully Applied For Natural Disaster Emergency");
 
     // Handle form submission
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto p-6 sm:p-8 md:p-10">
+    <Card className="m-8 flex justify-center flex-col p-4 sm:p-8 md:p-10">
       <CardHeader>
         <CardTitle className="text-3xl font-bold">
           Natural Disaster Report
@@ -112,7 +101,7 @@ export default function ApplicationForm() {
         >
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Current Situation Description</Label>
               <Controller
                 name="description"
                 control={control}
@@ -165,7 +154,7 @@ export default function ApplicationForm() {
                 )}
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="contact-name">Contact Name</Label>
+                <Label htmlFor="contact-name">Emergency Contact Name</Label>
                 <Controller
                   name="contactName"
                   control={control}
@@ -186,7 +175,7 @@ export default function ApplicationForm() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="contact-phone">Contact Phone</Label>
+                <Label htmlFor="contact-phone">Emergency Contact Phone</Label>
                 <Controller
                   name="contactPhone"
                   control={control}
@@ -239,7 +228,9 @@ export default function ApplicationForm() {
                       {...field}
                       id="magnitude"
                       type="number"
-                      placeholder="Enter magnitude"
+                      max={8}
+                      min={3}
+                      placeholder="Enter magnitude between 3 - 8"
                     />
                   )}
                 />
@@ -399,18 +390,23 @@ export default function ApplicationForm() {
                 />
                 {errors.floodDate && (
                   <span className="text-red-500">
-                    {errors.floodDate.message}
+                    {errors.floodDate.message as any}
                   </span>
                 )}
               </div>
             </div>
           </div>
-          <Button type="submit" disabled={loading}>
-            {loading ? "Please wait..." : "Submit Report"}
-            {loading ? <PiSpinner /> : null}
+          <Button type="submit" disabled={userApplicationMutation.isPending}>
+            {userApplicationMutation.isPending
+              ? "Please wait..."
+              : "Submit Report"}
+            {userApplicationMutation.isPending ? <PiSpinner /> : null}
           </Button>
         </form>
       </CardContent>
+
+      <FilePreview onFilesChange={(files: File[]) => setSelectedFiles(files)} />
+
       <CardFooter className="flex justify-end gap-2"></CardFooter>
     </Card>
   );

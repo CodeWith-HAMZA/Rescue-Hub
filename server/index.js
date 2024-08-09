@@ -19,6 +19,7 @@ app.use(cors());
 app.use(express.static((__dirname, path.join(__dirname, "public"))));
 
 (async () => {
+  await User.hasMany(Application, { foreignKey: "userId", as: "applications" });
   // await User.sync({ force: true });
   // await Application.sync({ force: true });
   // await Media.sync({ force: true });
@@ -33,6 +34,14 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 app.use("/user", userRoutes);
 app.use("/applications", applicationRoutes);
+app.get("/test", async (req, res) => {
+  // get the applications
+  const applications = await Application.findAll({
+    include: [{ model: Media, as: "medias" }],
+  });
+
+  res.json({ applications });
+});
 
 app.listen(port, () => {
   console.log("Server is running on port " + port);

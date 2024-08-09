@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
-
+ 
 const User = sequelize.define(
   "User",
   {
@@ -36,7 +36,7 @@ const User = sequelize.define(
       defaultValue: false,
     },
     // Additional featured fields
-    fullName: { 
+    fullName: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -65,5 +65,7 @@ const User = sequelize.define(
     updatedAt: "updated_at",
   }
 );
+// reference applications
+
 
 module.exports = User;

@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAllApplications } from "@/hooks/api/applications/queries/userAllApplications";
 import { getApplications } from "@/services/applicants";
 import {
   BotIcon,
@@ -30,13 +31,10 @@ import { MdCheckBox } from "react-icons/md";
 
 export default function ApplicantsList() {
   const r = useRouter();
-  const [applications, setApplications] = useState()
-  useEffect(() => {
-getApplications().then(_ => {
-console.log(_, ' app')
-  setApplications(_)
-})
-  }, [])
+  const [applications, setApplications] = useState();
+
+  const { data, isPending, isError } = useAllApplications();
+  console.log(data);
   return (
     <>
       <Button
@@ -131,14 +129,8 @@ console.log(_, ' app')
         </div>
         <div className="grid gap-8">
           <div className="grid gap-6">
-            <div className="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-              {[0, 0, 0, 0, 0].map((_) => {
-                return (
-                  <>
-                    <ApplicantCard />
-                  </>
-                );
-              })}
+            <div className="grid  md:grid-cols-1 gap-6">
+              {data && data?.map((_) => <ApplicantCard {..._} key={_?.id} />)}
             </div>
           </div>
         </div>

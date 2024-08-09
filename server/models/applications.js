@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 const User = require("./user");
+const Media = require("./medias");
 
 const Application = sequelize.define(
   "Application",
@@ -12,9 +13,9 @@ const Application = sequelize.define(
     },
     userId: {
       type: DataTypes.INTEGER,
+
       allowNull: false,
     },
-
 
     //
     description: {
@@ -24,6 +25,7 @@ const Application = sequelize.define(
     status: {
       type: DataTypes.ENUM("pending", "processing", "eligible", "not_eligible"),
       allowNull: false,
+
       defaultValue: "pending",
     },
     city: {
@@ -82,14 +84,34 @@ const Application = sequelize.define(
   {
     // Disable Sequelize's pluralization of model names
     // freezeTableName: true,
-//
+    //
     // Include timestamps
+    defaultScope: {
+      order: [["created_at", "DESC"]],
+    },
+
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
   }
 );
+// ref
+Application.belongsTo(User, { foreignKey: "userId", as: "user" });
 
-Application.belongsTo(User, { foreignKey: "userId" });
+Media.belongsTo(Application, {
+  foreignKey: "applicationId",
+  as: "application",
+});
+Application.hasMany(Media, {
+  foreignKey: "applicationId",
+  as: "medias",
+});
+// Application.belongsTo(User, { foreignKey: "userId" });
+// Application.belongsTo(User, { foreignKey: "userId" });
+
+// Application.belongsTo(User, {
+//   foreignKey: "userId",
+//   as: "user",
+// });
 
 module.exports = Application;

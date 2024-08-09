@@ -23,6 +23,7 @@ export const getApplications = async (): Promise<Application[]> => {
   const response = await axiosInstance.get<Application[]>("/applications/all");
   return response.data;
 };
+
 export const getUserApplications = async (): Promise<Application[]> => {
   const response = await axiosInstance.get<Application[]>("/applications", {
     headers: { Authorization: localStorage.getItem("token") },
@@ -60,6 +61,16 @@ export const createMedia = async (
 export const getMedia = async (applicationId: number): Promise<Media[]> => {
   const response = await axiosInstance.get<Media[]>(
     `/applications/${applicationId}/media`
+  );
+  return response.data;
+};
+
+export const getApplicationById = async (
+  applicationId: string
+): Promise<Application> => {
+  const response = await axiosInstance.get<Application>(
+    `/applications/${applicationId}`,
+    { headers: { Authorization: localStorage.getItem("token") } }
   );
   return response.data;
 };

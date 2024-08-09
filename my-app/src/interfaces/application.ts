@@ -1,4 +1,5 @@
 // Application.ts
+export type FloodSeverity = "Minor" | "Moderate" | "Severe";
 
 interface Application {
   id: number;
@@ -13,7 +14,7 @@ interface Application {
   magnitude?: number | null;
   earthquakeLocation?: string | null;
   earthquakeDate?: Date | null;
-  floodSeverity?: "Minor" | "Moderate" | "Severe" | null;
+  floodSeverity?: FloodSeverity;
   floodLocation?: string | null;
   floodDate?: Date | null;
   created_at: Date;
@@ -21,9 +22,6 @@ interface Application {
 }
 
 export default Application;
-
-
- 
 
 export interface Media {
   id: number;
@@ -33,4 +31,3 @@ export interface Media {
   createdAt?: Date;
   updatedAt?: Date;
 }
-

@@ -1,332 +1,229 @@
-import { Label } from "@/components/ui/label";
-import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group";
+"use client";
+import FilePreview from "@/components/FilePreview";
+import DamageBadge from "@/components/shared/DamageBadge";
+import { FloodSeverityBadge } from "@/components/shared/FloodSeverityBadge";
+import { MagnitudeBadge } from "@/components/shared/MagnitudeBadge";
 import {
-  SelectValue,
-  SelectTrigger,
-  SelectItem,
-  SelectContent,
-  Select,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import StarRating from "@/components/shared/StarRatings";
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { useApplicationById } from "@/hooks/api/applications/queries/useApplicationDetails";
+import { formatDate } from "@/lib/utils";
 
-export default function ApplicantDetails() {
+export default function ApplicationDetailsPage({ params, searchParams }: any) {
+  const { data, isPending, error, isError } = useApplicationById(
+    params?.id || ""
+  );
+  console.log(data, error, params);
   return (
-    <>
-      <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
-        <div className="grid gap-4 md:gap-10 items-start order-2 md:order-1">
-          <div className="hidden md:flex items-start">
-            <div className="grid gap-4">
-              <h1 className="font-bold text-3xl lg:text-4xl">
-                Acme Prism Tee: The Cozy Chromatic Blend
-              </h1>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-0.5">
-                  <StarRating rating={1} />
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  (12 reviews)
-                </span>
-              </div>
-              <p className="text-gray-500 dark:text-gray-400">
-                60% combed ringspun cotton/40% polyester jersey tee.
-              </p>
-              <div className="text-4xl font-bold">$99</div>
-            </div>
-          </div>
-          <form className="grid gap-4 md:gap-10">
-            <div className="grid gap-2">
-              <Label className="text-base" htmlFor="color">
-                Color
-              </Label>
-              <RadioGroup
-                className="flex items-center gap-2"
-                defaultValue="black"
-                id="color"
-              >
-                <Label
-                  className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                  htmlFor="color-black"
-                >
-                  <RadioGroupItem id="color-black" value="black" />
-                  Black
-                </Label>
-                <Label
-                  className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                  htmlFor="color-white"
-                >
-                  <RadioGroupItem id="color-white" value="white" />
-                  White
-                </Label>
-                <Label
-                  className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                  htmlFor="color-blue"
-                >
-                  <RadioGroupItem id="color-blue" value="blue" />
-                  Blue
-                </Label>
-              </RadioGroup>
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-base" htmlFor="size">
-                Size
-              </Label>
-              <RadioGroup
-                className="flex items-center gap-2"
-                defaultValue="m"
-                id="size"
-              >
-                <Label
-                  className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                  htmlFor="size-xs"
-                >
-                  <RadioGroupItem id="size-xs" value="xs" />
-                  XS
-                </Label>
-                <Label
-                  className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                  htmlFor="size-s"
-                >
-                  <RadioGroupItem id="size-s" value="s" />S
-                </Label>
-                <Label
-                  className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                  htmlFor="size-m"
-                >
-                  <RadioGroupItem id="size-m" value="m" />M
-                </Label>
-                <Label
-                  className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                  htmlFor="size-l"
-                >
-                  <RadioGroupItem id="size-l" value="l" />L
-                </Label>
-                <Label
-                  className="border cursor-pointer rounded-md p-2 flex items-center gap-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                  htmlFor="size-xl"
-                >
-                  <RadioGroupItem id="size-xl" value="xl" />
-                  XL
-                </Label>
-              </RadioGroup>
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-base" htmlFor="quantity">
-                Quantity
-              </Label>
-              <Select defaultValue="1">
-                <SelectTrigger className="w-24">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">1</SelectItem>
-                  <SelectItem value="2">2</SelectItem>
-                  <SelectItem value="3">3</SelectItem>
-                  <SelectItem value="4">4</SelectItem>
-                  <SelectItem value="5">5</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button size="lg">Add to cart</Button>
-              <Button size="lg" variant="outline">
-                <HeartIcon className="w-4 h-4 mr-2" />
-                Add to wishlist
-              </Button>
-            </div>
-          </form>
-          <Separator />
-          <div className="grid gap-4 text-sm leading-loose">
-            <h2 className="font-bold text-xl">Product Details</h2>
-            <p>
-              Introducing the Acme Prism T-Shirt, a perfect blend of style and
-              comfort for the modern individual. This tee is crafted with a
-              meticulous composition of 60% combed ringspun cotton and 40%
-              polyester jersey, ensuring a soft and breathable fabric that feels
-              gentle against the skin.
-            </p>
-            <p>
-              The design of the Acme Prism T-Shirt is as striking as it is
-              comfortable. The shirt features a unique prism-inspired pattern
-              that adds a modern and eye-catching touch to your ensemble.
-            </p>
-            <div className="grid gap-2">
-              <div className="flex items-center justify-between">
-                <span className="font-medium">Dimensions:</span>
-                <span>Length: 27 inches, Width: 18 inches</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-medium">Material:</span>
-                <span>60% Combed Ringspun Cotton, 40% Polyester</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-medium">Care Instructions:</span>
-                <span>Machine wash cold, tumble dry low</span>
-              </div>
-            </div>
-          </div>
+    <div className="container mx-auto py-8 px-4 md:px-6">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold capitalize">
+            {data?.contactName} Lat x Long: ({data?.floodLocation})
+          </h1>
         </div>
-        <div className="grid gap-3 items-start order-1">
-          <div className="flex md:hidden items-start">
-            <div className="grid gap-4">
-              <h1 className="font-bold text-2xl sm:text-3xl">
-                Acme Prism Tee: The Cozy Chromatic Blend
-              </h1>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Application Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <p> % combed ringspun cotton/40% polyester jersey tee.</p>
+                <div className="text-sm text-muted-foreground">Status</div>
+                <div className="font-medium text-green-500">Approved</div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-0.5">
-                  <StarRating rating={2} />
+              <div>
+                <div className="text-md mb-4 text-muted-foreground">
+                  Disasters
                 </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  (12 reviews)
-                </span>
+                {data?.magnitude ? (
+                  <div className="flex gap-2 items-center text-muted-foreground">
+                    <span className="text-sm font-semibold">EarthQuake: </span>
+                    <MagnitudeBadge magnitude={data?.magnitude} />
+                  </div>
+                ) : null}
+                {data?.floodSeverity ? (
+                  <div className="flex gap-2 mt-2 items-center text-muted-foreground">
+                    <span className="text-sm font-semibold">
+                      Flood Serverity:{" "}
+                    </span>
+                    <FloodSeverityBadge severity={data?.floodSeverity} />
+                  </div>
+                ) : null}
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Location</div>
+                <div className="font-medium capitalize">
+                  {data?.city}, {data?.country}
+                </div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Magnitude</div>
+                <div className="font-medium">{data?.magnitude}</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Damage</div>
+                <div className="font-medium">
+                  <DamageBadge
+                    earthquakeMagnitude={Number(data?.magnitude)}
+                    floodState={data?.floodSeverity || "Minor"}
+                    showPercentage={false}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Casualties</div>
+                <div className="font-medium">12</div>
               </div>
             </div>
-            <div className="text-4xl font-bold ml-auto">$99</div>
-          </div>
-          <div className="grid gap-4">
-            <img
-              alt="Product Image"
-              className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
-              height={600}
-              src="/placeholder.svg"
-              width={600}
-            />
-            <div className="hidden md:flex gap-4 items-start">
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 1</span>
-              </button>
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 2</span>
-              </button>
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 3</span>
-              </button>
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 4</span>
-              </button>
-              <button className="border hover:border-gray-900 rounded-lg overflow-hidden transition-colors dark:hover:border-gray-50">
-                <img
-                  alt="Preview thumbnail"
-                  className="aspect-square object-cover"
-                  height={100}
-                  src="/placeholder.svg"
-                  width={100}
-                />
-                <span className="sr-only">View Image 4</span>
-              </button>
+          </CardContent>
+          <CardFooter>
+            <div className="flex items-center justify-between">
+              {data?.created_at && (
+                <div className="text-sm text-muted-foreground">
+                  Submitted on {formatDate(data?.created_at, "DD/MM/YYYY")}
+                </div>
+              )}
+              {/* <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon">
+                  <DownloadIcon className="h-5 w-5" />
+                  <span className="sr-only">Download</span>
+                </Button>
+                <Button variant="ghost" size="icon">
+                  <ShareIcon className="h-5 w-5" />
+                  <span className="sr-only">Share</span>
+                </Button>
+              </div> */}
             </div>
-          </div>
-        </div>
+          </CardFooter>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Contact Details For Damage Assessment</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <div className="text-sm text-muted-foreground">
+                  Damage Level
+                </div>
+                <div className="font-medium">
+                  {" "}
+                  <DamageBadge
+                    earthquakeMagnitude={Number(data?.magnitude)}
+                    floodState={data?.floodSeverity || "Minor"}
+                    showPercentage={true}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">
+                  Emergency Contact Phone Number
+                </div>
+                <div className="font-medium">{data?.contactPhone}</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">
+                  Applicant Email-Address
+                </div>
+                <div className="font-medium">{data?.contactEmail}</div>
+              </div>
+              {data?.floodSeverity && data?.floodLocation ? (
+                <div>
+                  <div className="text-sm text-muted-foreground">
+                    Flood Location (Co-Ordinates)
+                  </div>
+                  <div className="font-medium">{data?.floodLocation}</div>
+                </div>
+              ) : null}
+              {data?.magnitude && data?.magnitude ? (
+                <div>
+                  <div className="text-sm text-muted-foreground">
+                    Earth Location (Co-Ordinates)
+                  </div>
+                  <div className="font-medium">{data?.earthquakeLocation}</div>
+                </div>
+              ) : null}
+
+              {/* <div>
+                <div className="text-sm text-muted-foreground">
+                  Description (Attachment Notes)
+                </div>
+                <div className="font-medium">
+                  {data?.description
+                    ? data?.description
+                    : "No Description Provided By The Applicant"}
+                </div>
+              </div> */}
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="lg:col-span-2 col-span-1">
+          <CardHeader>
+            <CardTitle>Attached Media And Description And Notes</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid w-full place-items-start gap-4">
+              <div>
+                <div className="font-medium text-lg">
+                  Description Or Notes By Applicant
+                </div>
+                <p className="text-md text-muted-foreground">
+                  {data?.description}
+                </p>
+              </div>
+              <div className="w-full">
+                <FilePreview
+                  onlyPreview
+                  filesForPreview={[
+                    "https://utfs.io/f/b0be05d2-ddf9-402b-9a83-c4d35c49ca92-izfubu.jpg",
+                    "https://utfs.io/f/b0be05d2-ddf9-402b-9a83-c4d35c49ca92-izfubu.jpg",
+                  ]}
+                />
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">
+                  Emergency Contact Phone Number
+                </div>
+                <div className="font-medium">{data?.contactPhone}</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">
+                  Applicant Email-Address
+                </div>
+                <div className="font-medium">{data?.contactEmail}</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Medical</div>
+                <div className="font-medium">Ongoing</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">
+                  Debris Removal
+                </div>
+                <div className="font-medium">In Progress</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">
+                  Rebuilding Efforts
+                </div>
+                <div className="font-medium">Planned</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-      <div className="mx-auto px-4 md:px-6 max-w-2xl grid gap-12">
-        <div className="flex gap-4">
-          <Avatar className="w-10 h-10 border">
-            <AvatarImage alt="@shadcn" src="/placeholder-user.jpg" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className="grid gap-4">
-            <div className="flex gap-4 items-start">
-              <div className="grid gap-0.5 text-sm">
-                <h3 className="font-semibold">Sarah Johnson</h3>
-                <time className="text-sm text-gray-500 dark:text-gray-400">
-                  2 days ago
-                </time>
-              </div>
-              <div className="flex items-center gap-0.5 ml-auto">
-                <StarRating rating={3} />
-              </div>
-            </div>
-            <div className="text-sm leading-loose text-gray-500 dark:text-gray-400">
-              <p>
-                I've been experimenting with my LuminaCook Multi-Function Air
-                Fryer for a few weeks now, and it's been a versatile addition to
-                my kitchen. It's great for making crispy fries, chicken wings,
-                and even some healthier options.
-              </p>
-            </div>
-          </div>
-        </div>
-        <Separator />
-        <div className="flex gap-4">
-          <Avatar className="w-10 h-10 border">
-            <AvatarImage alt="@shadcn" src="/placeholder-user.jpg" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className="grid gap-4">
-            <div className="flex gap-4 items-start">
-              <div className="grid gap-0.5 text-sm">
-                <h3 className="font-semibold">Alex Smith</h3>
-                <time className="text-sm text-gray-500 dark:text-gray-400">
-                  3 weeks ago
-                </time>
-              </div>
-              <div className="flex items-center gap-0.5 ml-auto">
-                <StarRating rating={2} />
-              </div>
-            </div>
-            <div className="text-sm leading-loose text-gray-500 dark:text-gray-400">
-              <p>
-                I recently purchased the SparkleShine Home Cleaning Robot, and
-                it has been a game-changer in my life. I used to spend hours
-                every weekend cleaning my house, but now I can simply turn on
-                this little robot and let it do the work. It's incredibly
-                efficient, navigating around obstacles with ease. The only
-                reason I didn't give it a perfect 5-star rating is that it
-                occasionally gets stuck under low furniture. Overall, it's been
-                a great addition to my home, saving me time and effort.
-              </p>
-            </div>
-          </div>
-        </div>
-        <Separator />
-        <div className="flex gap-4">
-          <Avatar className="w-10 h-10 border">
-            <AvatarImage alt="@shadcn" src="/placeholder-user.jpg" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className="grid gap-4">
-            <div className="flex gap-4 items-start" />
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
 
-function HeartIcon(props) {
+function DownloadIcon(props) {
   return (
     <svg
       {...props}
@@ -340,12 +237,14 @@ function HeartIcon(props) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" x2="12" y1="15" y2="3" />
     </svg>
   );
 }
 
-function StarIcon(props) {
+function FilePenIcon(props) {
   return (
     <svg
       {...props}
@@ -359,7 +258,51 @@ function StarIcon(props) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      <path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z" />
+    </svg>
+  );
+}
+
+function ShareIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+      <polyline points="16 6 12 2 8 6" />
+      <line x1="12" x2="12" y1="2" y2="15" />
+    </svg>
+  );
+}
+
+function TrashIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 6h18" />
+      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
     </svg>
   );
 }

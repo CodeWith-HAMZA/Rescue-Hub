@@ -1,7 +1,7 @@
 import "@uploadthing/react/styles.css";
 import type { Metadata } from "next";
 
-import "./globals.css";
+import "./../globals.css";
 import { Inter as FontSans } from "next/font/google";
 
 const fontSans = FontSans({

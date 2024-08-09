@@ -33,6 +33,11 @@ const Media = sequelize.define(
   }
 );
 
-Media.belongsTo(Application, { foreignKey: "applicationId" });
+// Media.belongsTo(Application, {
+//   foreignKey: "applicationId",
+//   as: "application",
+// });
+// Application.hasMany(Media, { foreignKey: "applicationId", as: "medias" });
+// Application.belongsTo(Media, { foreignKey: "applicationId", as: "application" });
 
 module.exports = Media;
