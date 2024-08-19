@@ -43,7 +43,7 @@ export const loginUser = async (credentials: {
 // Get user profile
 export const getUserProfile = async (): Promise<User> => {
   const response = await axiosInstance.get<User>("/user/profile", {
-    headers: { Authorization: localStorage.getItem('token') },
+    headers: { Authorization: localStorage.getItem("token") },
   });
   return response.data;
 };
@@ -53,6 +53,14 @@ export const updateUserProfile = async (
   userData: Partial<Omit<User, "id" | "isAdmin" | "isOnboarded">>
 ): Promise<User> => {
   const response = await axiosInstance.put<User>("/user/profile", userData);
+  return response.data;
+};
+// services/users.ts
+
+export const getAllUsersWithApplications = async (): Promise<User[]> => {
+  const response = await axiosInstance.get<User[]>("/user/all", {
+    headers: { Authorization: localStorage.getItem("token") },
+  });
   return response.data;
 };
 
@@ -67,3 +75,11 @@ export const updateUserProfile = async (
 //   profilePicture: 'https://example.com/profile.jpg',
 //   bio: 'Hello, I am a new user!',
 // });
+
+export const updateUserOnboardStatus = async (
+  userId: string
+): Promise<User> => {
+  const response = await axiosInstance.put(`/user/onboard-status/${userId}`);
+  return response.data;
+};
+

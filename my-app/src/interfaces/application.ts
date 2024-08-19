@@ -1,11 +1,16 @@
 // Application.ts
 export type FloodSeverity = "Minor" | "Moderate" | "Severe";
+export type ApplicationStatus =
+  | "pending"
+  | "processing"
+  | "eligible"
+  | "not_eligible";
 
 interface Application {
   id: number;
   userId: number;
   description: string;
-  status: "pending" | "processing" | "eligible" | "not_eligible";
+  status: ApplicationStatus;
   city: string;
   country: string;
   contactName: string;

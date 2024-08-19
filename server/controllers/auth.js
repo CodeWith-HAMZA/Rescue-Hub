@@ -76,14 +76,31 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   const { username, email } = req.body;
 
-  
-
   try {
     // Check if the user already exists
     let user = await User.findOne({ where: { email } });
     if (user) {
-      
-      return res.status(400).json({ msg: "User already exists" });
+      // Generate JWT token
+      const payload = {
+        user: {
+          id: user.id,
+          ...user,
+        },
+      };
+
+      jwt.sign(
+        payload,
+        "process.env.JWT_SECRET",
+        //   { expiresIn: "1h" }, // You can adjust the expiration time as needed
+        (err, token) => {
+          if (err) {
+            console.error(err.message);
+            return res.status(500).send("Server Error");
+          }
+          return res.json({ token, user });
+        }
+      );
+      return; // Ensure we return here to prevent further execution
     }
 
     // Create a new user
@@ -106,13 +123,16 @@ const register = async (req, res) => {
       "process.env.JWT_SECRET",
       //   { expiresIn: "1h" }, // You can adjust the expiration time as needed
       (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.error(err.message);
+          return res.status(500).send("Server Error");
+        }
         return res.json({ token, user });
       }
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    return res.status(500).send("Server Error");
   }
 };
 

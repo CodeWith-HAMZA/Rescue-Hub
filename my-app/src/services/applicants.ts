@@ -1,15 +1,26 @@
 // services/applicants.ts
 import axiosInstance from "./index";
-import { Media } from "../interfaces/application";
+import { ApplicationStatus, Media } from "../interfaces/application";
 import Application from "../interfaces/application";
+import { ClientUploadedFileData } from "uploadthing/types";
+import { uploadFiles } from "@/lib/utils";
+import { PostApplication } from "@/hooks/api/applications/mutations/useCreateApplication";
 
 // Create an application
 export const createApplication = async (
-  applicationData: Omit<
-    Application,
-    "id" | "userId" | "createdAt" | "updatedAt"
-  >
+  applicationData: PostApplication
 ): Promise<Application> => {
+  // let uploadedFiles: ClientUploadedFileData<{
+  //   uploadedBy: string;
+  // }>[] = [];
+
+  // uploading files using (upload-thing-service) as S3-Bucket
+  // uploadedFiles = await uploadFiles("rescueApplicationMediaUploader", {
+  //   files: <Array<File>>applicationData.mediaFiles,
+  // });
+  // console.log(uploadedFiles);
+  // applicationData.mediaFiles = <Array<string>>uploadedFiles.map((_) => _.url);
+
   const response = await axiosInstance.post<Application>(
     "/applications",
     applicationData,
@@ -19,8 +30,13 @@ export const createApplication = async (
 };
 
 // Get applications for the authenticated user
-export const getApplications = async (): Promise<Application[]> => {
-  const response = await axiosInstance.get<Application[]>("/applications/all");
+export const getApplications = async (
+  searchQuery?: string
+): Promise<Application[]> => {
+  const params = searchQuery ? { search: searchQuery } : {};
+  const response = await axiosInstance.get<Application[]>("/applications/all", {
+    params,
+  });
   return response.data;
 };
 
@@ -28,6 +44,10 @@ export const getUserApplications = async (): Promise<Application[]> => {
   const response = await axiosInstance.get<Application[]>("/applications", {
     headers: { Authorization: localStorage.getItem("token") },
   });
+  return response.data;
+};
+export const getAdminDashboardData = async () => {
+  const response = await axiosInstance.get(`/applications/admin/dashboard`);
   return response.data;
 };
 
@@ -74,14 +94,24 @@ export const getApplicationById = async (
   );
   return response.data;
 };
+export const updateApplicationStatusById = async (
+  applicationId: string,
+  status: ApplicationStatus
+): Promise<Application> => {
+  const response = await axiosInstance.put<Application>(
+    `/applications/${applicationId}/?myStatus=${status}`,
+    {},
+    { headers: { Authorization: localStorage.getItem("token") } }
+  );
+  return response.data;
+};
 
-// Example usage
-// const newApplication = await createApplication({
-//   description: 'Application description',
-//   status: 'pending',
-//   city: 'New York',
-//   country: 'USA',
-//   contactName: 'John Doe',
-//   contactPhone: '123-456-7890',
-//   contactEmail: 'john@example.com'
-// });
+export const fetchApplications = async (
+  searchQuery?: string
+): Promise<Application[]> => {
+  const params = searchQuery ? { search: searchQuery } : {};
+  const response = await axiosInstance.get<Application[]>("/applications/all", {
+    params,
+  });
+  return response.data;
+};

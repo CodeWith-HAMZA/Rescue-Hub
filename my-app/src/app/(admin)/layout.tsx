@@ -19,7 +19,23 @@ import { Toaster } from "sonner";
 import Header from "@/components/shared/Header";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import TanStackQueryProvider from "@/providers";
-export default function RootLayout({
+import AdminPasskeyInput from "./components/AdminPasskeyInput";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { PawPrintIcon, SearchIcon } from "lucide-react";
+import Link from "next/link";
+import { sidebarItems } from "@/utils/constants";
+import SiteContentSettings from "./SiteContentSettings";
+import AdminHeader from "./components/shared/AdminHeader";
+export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -28,7 +44,7 @@ export default function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html suppressHydrationWarning suppressContentEditableWarning lang="en">
         <body
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
@@ -37,25 +53,49 @@ export default function RootLayout({
         >
           <Toaster />
           <TanStackQueryProvider>
+            <AdminPasskeyInput />
             {/* <SignedIn></SignedIn> */}
-            <Header>
-              {/* <AuthProfile /> */}
-              <SignedOut>
-                {/* <SignInButton afterSignUpUrl="/onboarding/continue" afterSignInUrl="/" mode="redirect" /> */}
-                <SignUpButton
-                  className="bg-black rounded-md text-white hover:opacity-80 transition-all px-3 py-1.5"
-                  afterSignUpUrl="/onboarding/continue"
-                  afterSignInUrl="/"
-                  mode="redirect"
-                />
-              </SignedOut>
-              <SignedIn>
-                <UserButton
-                  appearance={{ variables: { colorText: "black" } }}
-                />
-              </SignedIn>
-            </Header>
-            <main>{children}</main>
+
+            <div className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[220px_1fr]">
+              <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+                <div className="flex flex-col gap-2">
+                  <div className="flex h-[60px] items-center px-6">
+                    <Link
+                      href="#"
+                      className="flex items-center gap-2 font-semibold"
+                      prefetch={false}
+                    >
+                      <PawPrintIcon className="h-6 w-6" />
+                      <Link href={"/admin"} className="">
+                        Rescue Hub
+                      </Link>
+                    </Link>
+                  </div>
+                  <div className="">
+                    <nav className="grid items-start px-4 text-sm font-medium">
+                      {sidebarItems.map((item) => (
+                        <Link
+                          key={item.label}
+                          href={item.href}
+                          className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                          prefetch={false}
+                        >
+                          <item.icon className="h-4 w-4" />
+                          {item.label}
+                        </Link>
+                      ))}
+                      <SiteContentSettings searchParams={""} />
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <AdminHeader />
+                <main className="flex  flex-col gap-4 p-4 md:gap-8 md:p-6">
+                  {children}
+                </main>
+              </div>
+            </div>
           </TanStackQueryProvider>
         </body>
       </html>

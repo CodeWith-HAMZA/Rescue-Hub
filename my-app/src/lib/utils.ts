@@ -7,6 +7,7 @@ import {
 } from "@uploadthing/react";
 
 import { twMerge } from "tailwind-merge";
+import { ApplicationStatus } from "@/interfaces/application";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -31,7 +32,13 @@ export function catchAsync(
 }
 
 // utils/decorators.ts
-
+export function truncateString(str: string, maxLength: number) {
+  if (str.length > maxLength) {
+    return str.slice(0, maxLength) + "...";
+  } else {
+    return str;
+  }
+}
 export function formatDate(date: Date, format: string) {
   const options = {
     year: "numeric",
@@ -78,4 +85,10 @@ export function formatDate(date: Date, format: string) {
 
 export const { useUploadThing, uploadFiles } = reactHelpers<Router>();
 
+export const filterStatuses = (givenStatus: ApplicationStatus, statusList: ApplicationStatus[]): ApplicationStatus[] => {
+  const statusOrder: ApplicationStatus[] = ["pending", "processing", "eligible", "not_eligible"];
+  const givenStatusIndex = statusOrder.indexOf(givenStatus);
 
+  // Filter out any status that comes before or is the given status itself
+  return statusList.filter((status) => statusOrder.indexOf(status) > givenStatusIndex);
+};

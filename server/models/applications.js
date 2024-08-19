@@ -97,6 +97,7 @@ const Application = sequelize.define(
 );
 // ref
 Application.belongsTo(User, { foreignKey: "userId", as: "user" });
+// User.hasMany(Application, { foreignKey: "userId", as: "applications" });
 
 Media.belongsTo(Application, {
   foreignKey: "applicationId",
@@ -104,7 +105,7 @@ Media.belongsTo(Application, {
 });
 Application.hasMany(Media, {
   foreignKey: "applicationId",
-  as: "medias",
+  as: "mediaFiles",
 });
 // Application.belongsTo(User, { foreignKey: "userId" });
 // Application.belongsTo(User, { foreignKey: "userId" });

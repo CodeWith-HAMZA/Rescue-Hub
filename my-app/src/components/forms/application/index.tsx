@@ -37,6 +37,7 @@ import { PiSpinner } from "react-icons/pi";
 import { useCreateApplication } from "@/hooks/api/applications/mutations/useCreateApplication";
 import FilePreview from "@/components/FilePreview";
 import { uploadFiles } from "@/lib/utils";
+import { ClientUploadedFileData } from "uploadthing/types";
 
 const schema = z.object({
   description: z.string().min(1, "Description is required"),
@@ -73,12 +74,18 @@ export default function ApplicationForm() {
   // pending", "processing", "eligible", "not_eligible
   const onSubmit = async (data: any) => {
     console.log(data, " h");
+    let uploadedFiles: ClientUploadedFileData<{
+      uploadedBy: string;
+    }>[] = [];
 
+    // uploading files using (upload-thing-service) as S3-Bucket
+
+    console.log(uploadFiles, " fil");
     const userApplication = userApplicationMutation.mutate({
       ...data,
-      mediaFiles: SelectedFiles,
+      mediaFiles: SelectedFiles as Array<File>,
     });
-    console.log(userApplication, " application");
+    // console.log(userApplication, " application");
     toast.success("Successfully Applied For Natural Disaster Emergency");
 
     // Handle form submission
@@ -396,7 +403,7 @@ export default function ApplicationForm() {
               </div>
             </div>
           </div>
-          <Button type="submit" disabled={userApplicationMutation.isPending}>
+          <Button type="submit" >
             {userApplicationMutation.isPending
               ? "Please wait..."
               : "Submit Report"}

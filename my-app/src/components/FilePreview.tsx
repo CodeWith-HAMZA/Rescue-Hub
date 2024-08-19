@@ -30,6 +30,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ fileUrl, index }) => (
       className="border border-gray-200 rounded-lg"
       style={{ width: "200px", height: "auto" }}
     />
+    <a target="__blank" href={fileUrl}>View File</a>
   </div>
 );
 

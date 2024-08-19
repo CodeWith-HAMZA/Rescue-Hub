@@ -24,7 +24,7 @@ function Links() {
     { label: "Home", route: "/home" },
     { label: "Applicants", route: "/applicants" },
     { label: "About", route: "/about" },
-    { label: "Contact", route: "/contact" },
+    // { label: "Contact", route: "/contact" },
   ];
   return (
     <>

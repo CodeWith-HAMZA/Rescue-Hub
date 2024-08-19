@@ -2,6 +2,7 @@ import { FloodSeverity } from "@/interfaces/application";
 import clsx from "clsx";
 
 export function FloodSeverityBadge({ severity }: { severity?: FloodSeverity }) {
+  if(!severity) return 'N/A'
   const FloodSeverityBadgeClasses = clsx(
     " px-2 py-0.5 pb-1 rounded-full text-sm font-semibold",
     {

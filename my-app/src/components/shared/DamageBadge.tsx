@@ -19,12 +19,13 @@ type DamageState =
 
 function getPercentage(damageState: DamageState) {
   let damagePercentile = 0;
-  if (damageState === "minimal") return 16;
-  if (damageState === "low") return 28;
-  if (damageState === "moderate") return 56;
-  if (damageState === "high") return 75;
-  if (damageState === "severe") 86;
-  return damagePercentile;
+  if (damageState === "minimal") return "16+";
+  if (damageState === "low") return "28+";
+  if (damageState === "moderate") return "56+";
+  if (damageState === "high") return "75+";
+  if (damageState === "severe") return "86+";
+  if (damageState === "catastrophic") return "90+";
+  return "unpredectable";
 }
 function getDamageState(
   earthquakeMagnitude: number,
@@ -64,7 +65,7 @@ const DamageBadge: React.FC<DamageBadgeProps> = ({
   const damageState = getDamageState(earthquakeMagnitude, floodState);
 
   const badgeClasses = clsx(
-    "inline-flex items-center px-2.5 pb-1 pt-0.5 rounded-full text-sm font-medium",
+    "inline-flex items-center px-2.5 capitalize pb-1 pt-0.5 rounded-full text-sm font-medium",
     {
       "bg-green-100 text-green-800": damageState === "minimal",
       "bg-blue-100 text-blue-800": damageState === "low",
@@ -76,15 +77,13 @@ const DamageBadge: React.FC<DamageBadgeProps> = ({
   );
 
   return (
-    <>
-      <span className={badgeClasses}>
-        {damageState}&nbsp;
-        <span>
-          {" "}
-          {showPercentage && " - " + getPercentage(damageState) + "%"}
-        </span>
+    <span className={badgeClasses}>
+      {damageState}&nbsp;
+      <span>
+        {" "}
+        {showPercentage && " - (" + getPercentage(damageState) + "%)"}
       </span>
-    </>
+    </span>
   );
 };
 

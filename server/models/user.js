@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
- 
+
 const User = sequelize.define(
   "User",
   {
@@ -11,7 +11,7 @@ const User = sequelize.define(
     },
     onBoarded: {
       type: DataTypes.STRING,
-      defaultValue: false,
+      defaultValue: "0",
     },
     username: {
       type: DataTypes.STRING,
@@ -66,6 +66,5 @@ const User = sequelize.define(
   }
 );
 // reference applications
-
 
 module.exports = User;

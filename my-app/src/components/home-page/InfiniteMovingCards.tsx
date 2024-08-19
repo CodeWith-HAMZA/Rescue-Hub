@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 
-export function CardsInfiniteMoving() {
+export function CardsInfiniteMoving({ heading }: { heading: string }) {
   return (
     <div className="rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
       <div className="font-bold mt-40 text-base md:text-7xl py-4">
-        Our Employers Said
+        {heading}
       </div>
       <InfiniteMovingCards
         className=""
