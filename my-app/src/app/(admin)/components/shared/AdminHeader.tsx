@@ -19,6 +19,9 @@ export default function AdminHeader() {
   const [input, setInput] = useState("");
   const r = useRouter();
 
+  if (!window) {
+    return null;
+  }
   return (
     <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
       <Link href="#" className="lg:hidden" prefetch={false}>
@@ -52,25 +55,27 @@ export default function AdminHeader() {
         </form>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <img
-                src="/placeholder.svg"
-                width="32"
-                height="32"
-                className="rounded-full"
-                alt="Avatar"
-                style={{ aspectRatio: "32/32", objectFit: "cover" }}
-              />
-              <span className="sr-only">Toggle user menu</span>
+            <Button
+              variant="default"
+              size="icon"
+              className="bg-gray-400/70 hover:bg-gray-400 rounded-lg transition-all hover:rounded-full"
+            >
+              A
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                localStorage.removeItem("admin");
+                if (window) {
+                  window.location.href = "/";
+                }
+              }}
+            >
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
