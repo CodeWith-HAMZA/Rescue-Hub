@@ -6,7 +6,7 @@ function RenderApplications({ data }: { data: Array<Application> }) {
   return (
     <DataTable
       data={data}
-      props={{ title: "All The Applications On The Platform", renderWhat: "all-applications" }}
+      props={{ title: "All The Applications On The Platform" }}
       columns={applicationColumns}
     />
   );

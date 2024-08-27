@@ -19,11 +19,11 @@ export const sidebarItems = [
     label: "Dashboard",
     icon: TbDashboard,
   },
-  {
-    href: "/admin/users",
-    label: "Users",
-    icon: UsersIcon,
-  },
+  // {
+  //   href: "/admin/users",
+  //   label: "Users",
+  //   icon: UsersIcon,
+  // },
   {
     href: "/admin/applications",
     label: "Applications",

@@ -38,6 +38,7 @@ import { useCreateApplication } from "@/hooks/api/applications/mutations/useCrea
 import FilePreview from "@/components/FilePreview";
 import { uploadFiles } from "@/lib/utils";
 import { ClientUploadedFileData } from "uploadthing/types";
+import { getUserProfile } from "@/services/users";
 
 const schema = z.object({
   description: z.string().min(1, "Description is required"),
@@ -78,6 +79,12 @@ export default function ApplicationForm() {
       uploadedBy: string;
     }>[] = [];
 
+    const user = await getUserProfile();
+    console.log(user, 'hey')
+    if (user?.onBoarded == "-1") {
+      toast.error("Suspended. Please contact support");
+      return
+    }
     // uploading files using (upload-thing-service) as S3-Bucket
 
     console.log(uploadFiles, " fil");
@@ -403,7 +410,7 @@ export default function ApplicationForm() {
               </div>
             </div>
           </div>
-          <Button type="submit" >
+          <Button type="submit">
             {userApplicationMutation.isPending
               ? "Please wait..."
               : "Submit Report"}

@@ -51,6 +51,7 @@ export default function CheckIsOnboarded({ user }: { user: User }) {
         </Alert>
       </div>
     );
+  return null;
   return (
     <div className="m-3">
       <Alert variant="default">

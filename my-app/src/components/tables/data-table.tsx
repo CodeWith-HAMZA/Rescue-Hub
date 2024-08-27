@@ -62,6 +62,7 @@ export function DataTable<TData, TValue>({
         "w-[50rem]":
           props.renderWhat === "all-users" ||
           props.renderWhat === "all-applications",
+        "w-full": !props.renderWhat,
       })}
     >
       {props.renderWhat === "all-users" && (
@@ -80,9 +81,14 @@ export function DataTable<TData, TValue>({
         <div className="flex w-full justify-start mx-8  items-center">
           <Input
             placeholder="Search By Emergency Contact Email..."
-            value={(table.getColumn("contactEmail")?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn("contactEmail")?.getFilterValue() as string) ??
+              ""
+            }
             onChange={(event) =>
-              table.getColumn("contactEmail")?.setFilterValue(event.target.value)
+              table
+                .getColumn("contactEmail")
+                ?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
