@@ -22,7 +22,8 @@ export default function Header({ children }: { children: ReactNode }) {
 function Links() {
   const links = [
     { label: "Home", route: "/home" },
-    { label: "Applicants", route: "/applicants" },
+    { label: "Effected Individuals", route: "/applicants" },
+    { label: "Donors", route: "/donator" },
     { label: "About", route: "/about" },
     // { label: "Contact", route: "/contact" },
   ];

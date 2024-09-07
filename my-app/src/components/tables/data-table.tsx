@@ -26,7 +26,7 @@ import { useState } from "react";
 
 type CustomProps = {
   title: string;
-  renderWhat: "all-users" | "all-applications";
+  renderWhat?: "all-users" | "all-applications";
 };
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

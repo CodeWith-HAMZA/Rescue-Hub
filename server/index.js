@@ -34,9 +34,7 @@ app.use(express.json());
 
 // Parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
-
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
- 
 
 app.post("/upload", upload.array("files"), (req, res) => {
   const files = req.files;
@@ -44,8 +42,12 @@ app.post("/upload", upload.array("files"), (req, res) => {
   if (!files || files.length === 0) {
     return res.status(400).json({ message: "No files were uploaded." });
   }
-  
-  // generate 
+
+  // Upload the files to the server
+  const fileUrls = files.map((file) => {
+    return `http://localhost:${port}/uploads/${file.filename}`;
+  });
+
   // Respond with the URLs of the uploaded files
   return res.json({ fileUrls });
 });

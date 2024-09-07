@@ -1,6 +1,6 @@
 // hooks/mutations/useCreateApplication.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createApplication } from "@/services/applicants";
+import { createApplication, uploadMultipleFiles } from "@/services/applicants";
 import Application, { Media } from "@/interfaces/application";
 import { uploadFiles } from "@/lib/utils";
 import { ClientUploadedFileData } from "uploadthing/types";
@@ -19,26 +19,28 @@ export const useCreateApplication = () => {
 
   return useMutation<Application, Error, PostApplication>({
     mutationFn: async (application) => {
-      let uploadedFiles: ClientUploadedFileData<{
-        uploadedBy: string;
-      }>[] = [];
+      // let uploadedFiles: ClientUploadedFileData<{
+      //   uploadedBy: string;
+      // }>[] = [];
+      let uploadedFiles: Array<File> = [];
 
       if (application.mediaFiles && application.mediaFiles?.length > 0) {
         try {
-          
-          uploadedFiles = await uploadFiles("rescueApplicationMediaUploader", {
-            files: <Array<File>>application.mediaFiles,
-          });
-
+          // uploadedFiles = await uploadFiles("rescueApplicationMediaUploader", {
+          //   files: <Array<File>>application.mediaFiles,
+          // });
+          uploadedFiles = await uploadMultipleFiles(
+            <Array<File>>application.mediaFiles
+          );
         } catch (error) {
-          console.log(error)
-          
+          toast.error("Error uploading files");
+          console.log(error);
         }
       }
 
       return await createApplication({
         ...application,
-        mediaFiles: uploadedFiles.map((_) => _.url),
+        mediaFiles: uploadedFiles,
       });
     },
 
@@ -47,8 +49,8 @@ export const useCreateApplication = () => {
     onSettled: async (data, error, variables, context) => {},
 
     onSuccess: async (application) => {
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.UserApplications] });
-      queryClient.invalidateQueries({ queryKey: ["all-applications"] });
+      // queryClient.invalidateQueries({ queryKey: [QueryKeys.UserApplications] });
+      // queryClient.invalidateQueries({ queryKey: ["all-applications"] });
     },
     onError: (error) => {
       console.error("Error creating application:", error);

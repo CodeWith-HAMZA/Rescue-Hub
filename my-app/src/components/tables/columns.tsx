@@ -115,11 +115,9 @@ export const applicationColumns: ColumnDef<Application>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Take Action For Application</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem >
-              <Link href={`/applicants/${id}`}>
-                View Application
-              </Link>
-              </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/applicants/${id}`}>View Application</Link>
+            </DropdownMenuItem>
 
             {remainingItems.map((status: ApplicationStatus) => {
               return (
@@ -138,6 +136,71 @@ export const applicationColumns: ColumnDef<Application>[] = [
         </DropdownMenu>
       );
     },
+  },
+];
+export const userApplicationColumns: ColumnDef<Application>[] = [
+  {
+    accessorKey: "floodSeverity",
+    header: "Severity",
+    cell: ({ row }) => (
+      <FloodSeverityBadge severity={row.original.floodSeverity} />
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const { status } = row.original;
+      return (
+        <>
+          <Badge
+            className={clsx({
+              "bg-yellow-700/40 pb-1 text-yellow-700": status === "processing",
+              "bg-blue-700/40 pb-1 text-blue-700": status === "pending",
+              "bg-green-700/40 pb-1 text-green-700": status === "eligible",
+              "bg-red-700/40 pb-1 text-red-700": status === "not_eligible",
+            })}
+          >
+            {status}
+          </Badge>
+        </>
+      );
+    },
+  },
+  {
+    accessorKey: "city",
+    header: "City",
+  },
+  {
+    accessorKey: "country",
+    header: "Country",
+  },
+  {
+    accessorKey: "contactName",
+    header: "Contact",
+  },
+  {
+    accessorKey: "contactEmail",
+    header: "Contact Email",
+  },
+  {
+    accessorKey: "magnitude",
+    header: "Magnitude",
+    cell: ({ row }) => row.original.magnitude || "N/A",
+  },
+  {
+    accessorKey: "earthquakeLocation",
+    header: "Location",
+    cell: ({ row }) =>
+      truncateString(row.original.earthquakeLocation || "N/A", 16),
+  },
+  {
+    accessorKey: "earthquakeDate",
+    header: "Date Of Disasters",
+    cell: ({ row }) =>
+      row.original.earthquakeDate
+        ? formatDate(row.original.earthquakeDate, "MM/DD/YYYY")
+        : "N/A",
   },
 ];
 // Define the columns for the Users table

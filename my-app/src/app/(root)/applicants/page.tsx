@@ -123,7 +123,7 @@ export default function ApplicantsList({ params, searchParams }) {
         <div className="grid gap-8">
           <div className="grid gap-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">All Applications</h2>
+              <h2 className="text-2xl font-bold">All Effectives</h2>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();

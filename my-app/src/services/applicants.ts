@@ -115,3 +115,24 @@ export const fetchApplications = async (
   });
   return response.data;
 };
+
+export const uploadMultipleFiles = async (files: Array<File>) => {
+  const formData = new FormData();
+
+  files.forEach((file) => {
+    formData.append("files", file); // Append each file to the form data
+  });
+
+  try {
+    const response = await axiosInstance.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Set the content type to handle multiple file uploads
+      },
+    });
+
+    return response.data.fileUrls; // Returns an array of URLs of the uploaded files
+  } catch (error) {
+    console.error("Error uploading multiple files:", error); // Log any error that occurs
+    throw error; // Rethrow the error to handle it in the calling function
+  }
+};

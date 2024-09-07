@@ -1,12 +1,20 @@
 import Application from "@/interfaces/application";
-import { applicationColumns } from "../tables/columns";
 import { DataTable } from "../tables/data-table";
+import { ColumnDef } from "@tanstack/react-table";
 
-function RenderApplications({ data }: { data: Array<Application> }) {
+function RenderApplications({
+  data,
+  applicationColumns,
+}: {
+  data: Array<Application>;
+  applicationColumns: Array<ColumnDef<Application>>;
+}) {
   return (
     <DataTable
       data={data}
-      props={{ title: "All The Applications On The Platform" }}
+      props={{
+        title: "All The Applications On The Platform",
+      }}
       columns={applicationColumns}
     />
   );

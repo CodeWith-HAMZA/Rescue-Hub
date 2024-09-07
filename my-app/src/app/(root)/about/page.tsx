@@ -31,7 +31,7 @@ export default function page() {
               <p className="text-xl mb-8">{data?.aboutus_section1_paragraph}</p>
               <Link
                 className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-gray-200 text-black font-medium hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                href="#"
+                href="/applicants"
               >
                 Explore More
               </Link>
@@ -57,7 +57,7 @@ export default function page() {
                 </p>
                 <Link
                   className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-gray-900 text-white font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                  href="#"
+                  href="/"
                 >
                   Our History
                 </Link>
@@ -71,7 +71,7 @@ export default function page() {
                 </p>
                 <Link
                   className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-gray-900 text-white font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                  href="#"
+                  href="/"
                 >
                   Our Approach
                 </Link>

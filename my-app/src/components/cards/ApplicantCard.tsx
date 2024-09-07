@@ -109,7 +109,7 @@ export default function ApplicantCard({ ...application }: Application) {
 
           <div className="bg-gray-100 dark:bg-gray-800 p-4 flex justify-between items-center">
             <div className="font-semibold text-lg">
-              Natural Disaster Application
+              Natural Disaster Application By { application.contactName} (Affected)
             </div>
             <Link
               className="text-sm flex items-center gap-1 hover:text-gray-500 hover:translate-x-2  transition-all hover:underline"

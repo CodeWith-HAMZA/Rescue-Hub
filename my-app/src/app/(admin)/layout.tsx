@@ -84,7 +84,7 @@ export default function AdminLayout({
                           {item.label}
                         </Link>
                       ))}
-                      {/* <SiteContentSettings searchParams={""} /> */}
+                      <SiteContentSettings searchParams={""} />
                     </nav>
                   </div>
                 </div>
