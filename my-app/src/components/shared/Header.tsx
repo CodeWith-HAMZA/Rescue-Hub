@@ -23,7 +23,7 @@ function Links() {
   const links = [
     { label: "Home", route: "/home" },
     { label: "Effected Individuals", route: "/applicants" },
-    { label: "Donors", route: "/donator" },
+    { label: "Donors", route: "/donors" },
     { label: "About", route: "/about" },
     // { label: "Contact", route: "/contact" },
   ];

@@ -1,7 +1,7 @@
 "use client";
 import RenderApplications from "@/components/shared/RenderApplications";
 import Applications from "@/components/tables/applications";
-import { applicationColumns } from "@/components/tables/columns";
+import { applicationColumns, userApplicationColumns } from "@/components/tables/columns";
 import { DataTable } from "@/components/tables/data-table";
 import { useUserApplications } from "@/hooks/api/applications/queries/useUserApplications";
 import Application from "@/interfaces/application";
@@ -13,7 +13,7 @@ function UserApplications() {
   const { data, isLoading, isFetched } = useUserApplications();
   console.log(data);
   // return <Applications applications={data} />;
-  return <RenderApplications data={data || []} />;
+  return <RenderApplications applicationColumns={userApplicationColumns} data={data || []} />;
 }
 
 export default UserApplications;

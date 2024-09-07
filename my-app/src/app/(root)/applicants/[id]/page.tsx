@@ -135,7 +135,7 @@ export default function ApplicationDetailsPage({ params, searchParams }: any) {
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">
-                  Applicant Email-Address
+                  Applicant Email-Address Or CNIC
                 </div>
                 <div className="font-medium">{data?.contactEmail}</div>
               </div>

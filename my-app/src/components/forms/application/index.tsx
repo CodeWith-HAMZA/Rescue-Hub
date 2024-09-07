@@ -49,7 +49,7 @@ const schema = z.object({
   country: z.string().min(1, "Country is required"),
   contactName: z.string().min(1, "Emmergency Contact Name is required"),
   contactPhone: z.string().min(1, "Emergency Contact Phone is required"),
-  contactEmail: z.string().email("Invalid email address"),
+  contactEmail: z.string().min(8, "Email address Or CNIC is Required"),
   magnitude: z.string().min(1, "Magnitude is required"),
   earthquakeLocation: z.string().min(1, "Earthquake Location is required"),
   earthquakeDate: z.date(),
@@ -80,10 +80,10 @@ export default function ApplicationForm() {
     }>[] = [];
 
     const user = await getUserProfile();
-    console.log(user, 'hey')
+    console.log(user, "hey");
     if (user?.onBoarded == "-1") {
       toast.error("Suspended. Please contact support");
-      return
+      return;
     }
     // uploading files using (upload-thing-service) as S3-Bucket
 
@@ -209,7 +209,7 @@ export default function ApplicationForm() {
                 )}
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="contact-email">Contact Email</Label>
+                <Label htmlFor="contact-email">Contact Email Or CNIC</Label>
                 <Controller
                   name="contactEmail"
                   control={control}

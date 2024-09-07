@@ -6,6 +6,7 @@ import {
   DollarSignIcon,
   UsersIcon,
 } from "lucide-react";
+import { BiWorld } from "react-icons/bi";
 // import { MdDashboard } from "react-icons/md";
 import { TbDashboard } from "react-icons/tb";
 
@@ -19,21 +20,26 @@ export const sidebarItems = [
     label: "Dashboard",
     icon: TbDashboard,
   },
-  // {
-  //   href: "/admin/users",
-  //   label: "Users",
-  //   icon: UsersIcon,
-  // },
+  {
+    href: "/admin/users",
+    label: "Users",
+    icon: UsersIcon,
+  },
   {
     href: "/admin/applications",
     label: "Applications",
     icon: ClipboardListIcon,
   },
-  // {
-  //   href: "/admin/settings",
-  //   label: "Settings",
-  //   icon: CogIcon,
-  // },
+  {
+    href: "/admin/world-view",
+    label: "World View",
+    icon: BiWorld,
+  },
+  {
+    href: "/admin/settings",
+    label: "Settings",
+    icon: CogIcon,
+  },
 ];
 
 export const applicationStatusList: ApplicationStatus[] = [
