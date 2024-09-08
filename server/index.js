@@ -1,4 +1,6 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
+
 const { sequelize } = require("./config/db");
 const User = require("./models/user");
 const Application = require("./models/applications");
@@ -36,6 +38,35 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.post("/auth/:email", async (req, res) => {
+  // const { email } = req.query;
+  const { email } = req.params;
+
+  console.log(email, "hey");
+  const user = await User.findOne({ where: { email } });
+  if (!user) {
+    return res.json({ message: "User not found" });
+  }
+  const payload = {
+    user: {
+      id: user.id,
+      ...user,
+    },
+  };
+
+  jwt.sign(
+    payload,
+    "process.env.JWT_SECRET",
+    //   { expiresIn: "1h" }, // You can adjust the expiration time as needed
+    (err, token) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Server Error");
+      }
+      return res.json({ token, user });
+    }
+  );
+});
 app.post("/upload", upload.array("files"), (req, res) => {
   const files = req.files;
 

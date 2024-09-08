@@ -61,7 +61,7 @@ const login = async (req, res) => {
     jwt.sign(
       payload,
       "process.env.JWT_SECRET",
-      { expiresIn: "1h" }, // You can adjust the expiration time as needed
+      // { expiresIn: "1h" }, // You can adjust the expiration time as needed
       (err, token) => {
         if (err) throw err;
         res.json({ token, user });
