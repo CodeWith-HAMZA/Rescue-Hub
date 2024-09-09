@@ -70,7 +70,7 @@ export const applicationColumns: ColumnDef<Application>[] = [
   },
   {
     accessorKey: "contactEmail",
-    header: "Contact Email",
+    header: "Identification",
   },
   {
     accessorKey: "magnitude",
@@ -181,7 +181,7 @@ export const userApplicationColumns: ColumnDef<Application>[] = [
   },
   {
     accessorKey: "contactEmail",
-    header: "Contact Email",
+    header: "Identification",
   },
   {
     accessorKey: "magnitude",

@@ -88,7 +88,7 @@ export default function ApplicationForm() {
     // uploading files using (upload-thing-service) as S3-Bucket
 
     console.log(uploadFiles, " fil");
-    const userApplication = userApplicationMutation.mutate({
+    userApplicationMutation.mutate({
       ...data,
       mediaFiles: SelectedFiles as Array<File>,
     });
@@ -217,7 +217,7 @@ export default function ApplicationForm() {
                     <Input
                       {...field}
                       id="contact-email"
-                      type="email"
+                      type="text"
                       placeholder="Enter contact email"
                     />
                   )}

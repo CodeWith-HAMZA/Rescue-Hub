@@ -9,7 +9,7 @@ export default function Header({ children }: { children: ReactNode }) {
   return (
     <div className="flex shadow-sm justify-between items-center py-5 px-6">
       <h1 className="text-lg font-semibold cursor-pointer active:scale-95 hover:opacity-90 transition-all">
-        <Link href={"/home"}>Rescue Hub</Link>
+        <Link href={"/home"}>NDRS</Link>
       </h1>
       {/* <Navbar /> */}
       <Links />

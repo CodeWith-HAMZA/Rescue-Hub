@@ -48,9 +48,9 @@ const Application = sequelize.define(
     contactEmail: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isEmail: true,
-      },
+      // validate: {
+      //   isEmail: true,
+      // },
     },
     // Earthquake specific fields
     magnitude: {

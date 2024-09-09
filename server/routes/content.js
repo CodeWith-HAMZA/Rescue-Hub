@@ -14,6 +14,15 @@ router.post("/update-or-create", async (req, res) => {
   }
 
   try {
+    const existingContent = await Content.findOne({
+      where: { key: keyValuePairs.at(0).key },
+    });
+
+    if (existingContent) {
+      existingContent.value = keyValuePairs.at(0).value;
+      await existingContent.save();
+      return res.status(200).json({ message: "Content updated successfully." });
+    }
     const content = await Content.create({
       key: keyValuePairs.at(0).key,
       value: keyValuePairs.at(0).value,

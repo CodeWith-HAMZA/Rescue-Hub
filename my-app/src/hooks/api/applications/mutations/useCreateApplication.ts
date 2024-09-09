@@ -6,6 +6,7 @@ import { uploadFiles } from "@/lib/utils";
 import { ClientUploadedFileData } from "uploadthing/types";
 import { toast } from "sonner";
 import { QueryKeys } from "@/interfaces/types";
+import { useUser } from "@clerk/nextjs";
 
 export type PostApplication = Omit<
   Application,
@@ -16,6 +17,7 @@ export type PostApplication = Omit<
 
 export const useCreateApplication = () => {
   const queryClient = useQueryClient();
+  const { user } = useUser();
 
   return useMutation<Application, Error, PostApplication>({
     mutationFn: async (application) => {
@@ -37,6 +39,10 @@ export const useCreateApplication = () => {
           console.log(error);
         }
       }
+      const emailOrCNIC = application.contactEmail;
+      application.contactEmail = user?.emailAddresses[0].emailAddress
+        ? `Primary Email: ${user?.emailAddresses[0].emailAddress}, Email/CNIC: ${emailOrCNIC}`
+        : emailOrCNIC;
 
       return await createApplication({
         ...application,

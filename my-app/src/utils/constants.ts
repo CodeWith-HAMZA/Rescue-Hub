@@ -35,11 +35,7 @@ export const sidebarItems = [
     label: "World View",
     icon: BiWorld,
   },
-  {
-    href: "/admin/settings",
-    label: "Settings",
-    icon: CogIcon,
-  },
+ 
 ];
 
 export const applicationStatusList: ApplicationStatus[] = [

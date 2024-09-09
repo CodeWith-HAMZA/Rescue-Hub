@@ -67,7 +67,7 @@ export default function page() {
           </div>
           <div className="flex gap-2">
             <button className="bg-black hover:opacity-80 transition-all dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2">
-              Explore Applicants
+              Explore Effectives
             </button>
             <button className="bg-neutral-200 hover:opacity-80 transition-all dark:bg-white rounded-full w-fit text-black hover:underline dark:text-black px-4 py-2">
               <Link href={"/admin/verify"}>Enter As Admin</Link>
