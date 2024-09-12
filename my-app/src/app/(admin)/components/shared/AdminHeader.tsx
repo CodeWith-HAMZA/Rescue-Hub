@@ -29,7 +29,7 @@ export default function AdminHeader() {
         <span className="sr-only">Home</span>
       </Link>
       <div className="flex-1">
-        <h1 className="font-semibold text-lg">Rescue Dashboard</h1>
+        <h1 className="font-semibold text-lg"> Dashboard</h1>
       </div>
       <div className="flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <form

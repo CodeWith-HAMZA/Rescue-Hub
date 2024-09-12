@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 let interval: any;
 
@@ -58,13 +59,22 @@ export const CardStack = ({
             <div className="font-normal text-neutral-700 dark:text-neutral-200">
               {card.content}
             </div>
-            <div>
-              <p className="text-neutral-500 font-medium dark:text-white">
-                {card.name}
-              </p>
-              <p className="text-neutral-400 font-normal dark:text-neutral-200">
-                {card.designation}
-              </p>
+
+            <div className="flex items-center gap-3">
+              <div className="">
+                <p className="text-neutral-500 font-medium dark:text-white">
+                  {card.name}
+                </p>
+                <p className="text-neutral-400 font-normal dark:text-neutral-200">
+                  {card.designation}
+                </p>
+              </div>
+              <Image
+                height={120}
+                width={120}
+                className="rounded-lg hover:opacity-60 h-[4rem] transition-all cursor-pointer"
+                src={card?.img || ""}
+              />
             </div>
           </motion.div>
         );

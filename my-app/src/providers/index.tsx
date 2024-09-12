@@ -20,7 +20,10 @@ function TanStackQueryProvider({ children }: { children: ReactNode }) {
         .post("/auth/" + user.user?.emailAddresses[0].emailAddress)
         .then(({ data }) => {
           console.log(data);
-          localStorage.setItem("token", data?.token ?? "...");
+          if(data?.token){
+
+            localStorage.setItem("token", data?.token);
+          }
         });
     }
   }, [user?.user?.emailAddresses[0].emailAddress]);

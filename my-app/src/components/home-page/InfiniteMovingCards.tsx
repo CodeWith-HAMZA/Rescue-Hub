@@ -2,12 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
+import Image from "next/image";
 
 export function CardsInfiniteMoving({
   heading,
   data,
 }: {
-  data: { quote: string; name: string; title: string }[];
+  data: { quote: string; name: string; title: string; img: string }[];
   heading: string;
 }) {
   return (

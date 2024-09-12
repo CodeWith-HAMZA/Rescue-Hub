@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.static((__dirname, path.join(__dirname, "public"))));
 
 (async () => {
-  await User.hasMany(Application, { foreignKey: "userId", as: "applications" });
+  // await User.hasMany(Application, { foreignKey: "userId", as: "applications" });
   // await Content.sync({ force: true });
   // await User.sync({ force: true });
   // await Application.sync({ force: true });
@@ -43,8 +43,13 @@ app.post("/auth/:email", async (req, res) => {
   const { email } = req.params;
 
   console.log(email, "hey");
-  const user = await User.findOne({ where: { email } });
+  let user = await User.findOne({ where: { email } });
   if (!user) {
+    user = await User.create({
+      username: "u" + email,
+      email,
+      password: "using-clerk-auth-instead-this",
+    });
     return res.json({ message: "User not found" });
   }
   const payload = {

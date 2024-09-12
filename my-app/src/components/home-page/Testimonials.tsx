@@ -31,40 +31,45 @@ export const Highlight = ({
 
 const CARDS = [
   {
+    img: "/rescue2.jpeg",
     id: 0,
-    name: "Manu Arora",
-    designation: "Senior Software Engineer",
+    name: "Rescue Operations",
+    designation: "Emergency Response Team",
     content: (
       <p>
-        These cards are amazing, <Highlight>I want to use them</Highlight> in my
-        project. Framer motion is a godsend ngl tbh fam 🙏
+        Our highly trained team is ready to{" "}
+        <Highlight>mobilize immediately</Highlight> when disaster strikes,
+        ensuring timely and effective rescue operations. We are committed to{" "}
+        <Highlight>saving lives</Highlight> and providing emergency relief to
+        those in need.
       </p>
     ),
   },
   {
+    img: "/rescue22.jpeg",
     id: 1,
-    name: "Elon Musk",
-    designation: "Senior Shitposter",
+    name: "Medical Aid",
+    designation: "Healthcare Support",
     content: (
       <p>
-        I dont like this Twitter thing,{" "}
-        <Highlight>deleting it right away</Highlight> because yolo. Instead, I
-        would like to call it <Highlight>X.com</Highlight> so that it can easily
-        be confused with adult sites.
+        In times of natural disasters, medical support is critical. Our platform
+        offers <Highlight>medical assistance</Highlight> and first aid supplies
+        to <Highlight>treat injuries</Highlight> and save lives, providing care
+        even in the most challenging circumstances.
       </p>
     ),
   },
   {
     id: 2,
-    name: "Tyler Durden",
-    designation: "Manager Project Mayhem",
+    img: "/rescue.jpg",
+    name: "Shelter and Supplies",
+    designation: "Relief Resources Team",
     content: (
       <p>
-        The first rule of
-        <Highlight>Fight Club</Highlight> is that you do not talk about fight
-        club. The second rule of
-        <Highlight>Fight club</Highlight> is that you DO NOT TALK about fight
-        club.
+        We provide essential relief, including <Highlight>shelter</Highlight>{" "}
+        and supplies like food and water, to ensure that those affected by
+        disasters are safe. Our priority is to give everyone a{" "}
+        <Highlight>safe place to stay</Highlight> until they can return home.
       </p>
     ),
   },

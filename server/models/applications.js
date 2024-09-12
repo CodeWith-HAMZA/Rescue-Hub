@@ -11,6 +11,10 @@ const Application = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    // cnic: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
     userId: {
       type: DataTypes.INTEGER,
 

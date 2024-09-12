@@ -92,7 +92,8 @@ export default function ApplicationDetailsPage({ params, searchParams }: any) {
             <div className="flex items-center justify-between">
               {data?.created_at && (
                 <div className="text-sm text-muted-foreground">
-                  Submitted on {formatDate(data?.created_at, "DD/MM/YYYY") } at {formatDate(data?.created_at, '(HH:mm)' )}
+                  Submitted on {formatDate(data?.created_at, "DD/MM/YYYY")} at{" "}
+                  {formatDate(data?.created_at, "(HH:mm)")}
                 </div>
               )}
               {/* <div className="flex items-center gap-2">
@@ -131,13 +132,14 @@ export default function ApplicationDetailsPage({ params, searchParams }: any) {
                 <div className="text-sm text-muted-foreground">
                   Emergency Contact Phone Number
                 </div>
-                <div className="font-medium">{data?.contactPhone}</div>
+                <div className="font-medium">{data?.contactPhone || ''}</div>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">
-                  Applicant Email-Address Or CNIC
+ 
+                Account Number (Jazz Cash Or Easy Paisa)
                 </div>
-                <div className="font-medium">{data?.contactEmail}</div>
+                <div className="font-medium">{data?.contactName}</div>
               </div>
               {data?.floodSeverity && data?.floodLocation ? (
                 <div>
@@ -205,6 +207,12 @@ export default function ApplicationDetailsPage({ params, searchParams }: any) {
                   {data?.updated_at
                     ? formatDate(data.updated_at, "DD/MM/YYYY (HH:mm)")
                     : null}
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">
+                    {"Applicant's"} Details
+                  </div>
+                  <div className="font-medium">{data?.contactEmail}</div>
                 </div>
               </div>
               {/* <div>

@@ -11,7 +11,7 @@ import {
 import StarRating from "../shared/StarRatings";
 import Application from "@/interfaces/application";
 import clsx from "clsx";
-import { formatDate } from "@/lib/utils";
+import { extractEmails, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { FloodSeverityBadge } from "../shared/FloodSeverityBadge";
 import { MagnitudeBadge } from "../shared/MagnitudeBadge";
@@ -28,7 +28,7 @@ export default function ApplicantCard({ ...application }: Application) {
               <CardItem translateZ="50">
                 <div className="size-16 rounded-xl bg-gray-200 flex items-center justify-center">
                   <span className="text-2xl capitalize">
-                    {application.contactName.at(0)}
+                    {extractEmails(application.contactEmail).at(0)}
                   </span>
                 </div>
               </CardItem>
@@ -36,7 +36,7 @@ export default function ApplicantCard({ ...application }: Application) {
               <div>
                 <CardItem translateZ="50">
                   <div className="font-semibold flex gap-2 text-lg">
-                    <p>{application.contactName}</p>
+                    <p>{extractEmails(application.contactEmail)}</p>
                     <p hidden={!application.floodSeverity}>
                       ({application.floodSeverity})
                     </p>
@@ -109,7 +109,8 @@ export default function ApplicantCard({ ...application }: Application) {
 
           <div className="bg-gray-100 dark:bg-gray-800 p-4 flex justify-between items-center">
             <div className="font-semibold text-lg">
-              Natural Disaster Application By { application.contactName} (Affected)
+              Natural Disaster Application By {application.contactName}{" "}
+              (Affected)
             </div>
             <Link
               className="text-sm flex items-center gap-1 hover:text-gray-500 hover:translate-x-2  transition-all hover:underline"

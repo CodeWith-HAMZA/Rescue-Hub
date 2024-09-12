@@ -47,9 +47,10 @@ const schema = z.object({
   // }),
   city: z.string().min(1, "City is required"),
   country: z.string().min(1, "Country is required"),
-  contactName: z.string().min(1, "Emmergency Contact Name is required"),
-  contactPhone: z.string().min(1, "Emergency Contact Phone is required"),
-  contactEmail: z.string().min(8, "Email address Or CNIC is Required"),
+  contactName: z.string().min(11, "Kindly enter valid Account Number (Easy Paisa / Jazz Cash) ").max(16, "Kindly enter valid Account Number (Easy Paisa / Jazz Cash) "),
+  cnic: z.string().min(13, "Invalid Cnic Range").max(13, "Invalid Cnic Range"),
+  contactPhone: z.string().min(11, "Emergency Contact Phone is required"),
+  contactEmail: z.string().min(8, "Contact Email address is Required"),
   magnitude: z.string().min(1, "Magnitude is required"),
   earthquakeLocation: z.string().min(1, "Earthquake Location is required"),
   earthquakeDate: z.date(),
@@ -57,6 +58,7 @@ const schema = z.object({
     errorMap: () => ({ message: "Flood Severity is required" }),
   }),
   floodLocation: z.string().min(1, "Flood Location is required"),
+
   floodDate: z.date(),
 });
 
@@ -82,7 +84,11 @@ export default function ApplicationForm() {
     const user = await getUserProfile();
     console.log(user, "hey");
     if (user?.onBoarded == "-1") {
-      toast.error("Suspended. Please contact support");
+      toast.error("You Are Now Suspended By The Admin");
+      return;
+    }
+    if (user?.onBoarded == "0") {
+      toast.error("You Are Not Onboarded, Kindly Complete Your Profile");
       return;
     }
     // uploading files using (upload-thing-service) as S3-Bucket
@@ -148,6 +154,19 @@ export default function ApplicationForm() {
                   <span className="text-red-500">{errors.city.message}</span>
                 )}
               </div>
+              <div className="grid gap-2">
+                <Label htmlFor="cnic">Cnic</Label>
+                <Controller
+                  name="cnic"
+                  control={control}
+                  render={({ field }) => (
+                    <Input {...field} id="cnic" placeholder="Enter your Cnic" />
+                  )}
+                />
+                {errors.cnic && (
+                  <span className="text-red-500">{errors.cnic.message}</span>
+                )}
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
@@ -168,7 +187,9 @@ export default function ApplicationForm() {
                 )}
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="contact-name">Emergency Contact Name</Label>
+                <Label htmlFor="contact-name">
+                  Account Number (Easy Paisa/Jazz cash):
+                </Label>
                 <Controller
                   name="contactName"
                   control={control}
@@ -176,7 +197,7 @@ export default function ApplicationForm() {
                     <Input
                       {...field}
                       id="contact-name"
-                      placeholder="Enter contact name"
+                      placeholder="Account Number (Easy Paisa or Jazz cash)"
                     />
                   )}
                 />
@@ -209,7 +230,7 @@ export default function ApplicationForm() {
                 )}
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="contact-email">Contact Email Or CNIC</Label>
+                <Label htmlFor="contact-email">Contact Email </Label>
                 <Controller
                   name="contactEmail"
                   control={control}

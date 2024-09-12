@@ -35,6 +35,7 @@ import Link from "next/link";
 import { sidebarItems } from "@/utils/constants";
 import SiteContentSettings from "./SiteContentSettings";
 import AdminHeader from "./components/shared/AdminHeader";
+import Image from "next/image";
 export default function AdminLayout({
   children,
 }: Readonly<{
@@ -65,9 +66,10 @@ export default function AdminLayout({
                       className="flex items-center gap-2 font-semibold"
                       prefetch={false}
                     >
-                      <PawPrintIcon className="h-6 w-6" />
+                      {/* <PawPrintIcon className="h-6 w-6" /> */}
+                      <Image width={40} height={40} src="/logo.jpg" />
                       <Link href={"/admin"} className="">
-                        Rescue Hub
+                        NDRS
                       </Link>
                     </Link>
                   </div>

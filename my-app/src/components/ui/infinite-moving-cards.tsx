@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export const InfiniteMovingCards = ({
@@ -94,6 +95,8 @@ export const InfiniteMovingCards = ({
             }}
             key={item.name}
           >
+                  <Image src={item?.img || ''} style={{borderRadius: "0.8rem", width: "100%", height: "16rem" }} className="rounded-lg my-4" width={200} alt='img'   height={200}  />
+
             <blockquote>
               <div
                 aria-hidden="true"

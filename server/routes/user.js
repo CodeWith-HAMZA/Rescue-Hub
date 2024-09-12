@@ -21,13 +21,13 @@ router.get("/me", auth, (req, res) => res.json(req.user));
 router.get("/all", async (req, res) => {
   try {
     const users = await User.findAll({
-      include: [
-        {
-          model: Application,
-          // attributes: ["id", "username", "email"], // Specify the user attributes you want to include
-          as: "applications",
-        },
-      ],
+      // include: [
+      //   // {
+      //   //   model: Application,
+      //   //   // attributes: ["id", "username", "email"], // Specify the user attributes you want to include
+      //   //   as: "applications",
+      //   // },
+      // ],
     });
     return res.json(users);
   } catch (err) {
@@ -42,7 +42,7 @@ router.put("/onboard-status/:userId", async (req, res) => {
   try {
     const user = await User.findByPk(userId);
     if (user.onBoarded == "-1") {
-      user.onBoarded = "0";
+      user.onBoarded = "1";
       await user.save();
       return res.json({ msg: "Onboarding status updated" });
     }

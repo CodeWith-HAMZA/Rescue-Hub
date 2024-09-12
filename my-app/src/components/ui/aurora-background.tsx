@@ -45,12 +45,20 @@ export const AuroraBackground = ({
                 `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,var(--transparent)_70%)]`
             )}
           ></div> */}
-          <div style={{background: "url('https://img.freepik.com/premium-photo/rescue-team-hd-8k-wallpaper-stock-photographic-image_973183-2379.jpg') center center/cover"}} className="bg-red-400 h-screen z-10"></div>
+          <div
+            style={{
+              background:
+                "url('/6QB47446R5OTZIJ7UQHTVFWBUY.jpg') center center/cover",
+              opacity: 0.5,
+            }}
+            className="bg-red-400 h-screen z-10"
+          ></div>
         </div>
-        <p className="text-white">
+
+<div className="text-black">
 
         {children}
-        </p>
+</div>
       </div>
     </main>
   );

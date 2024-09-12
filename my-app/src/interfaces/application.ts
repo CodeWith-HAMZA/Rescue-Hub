@@ -9,6 +9,7 @@ export type ApplicationStatus =
 interface Application {
   id: number;
   userId: number;
+  cnic?: string;
   description: string;
   status: ApplicationStatus;
   city: string;

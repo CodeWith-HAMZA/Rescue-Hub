@@ -85,10 +85,25 @@ export function formatDate(date: Date, format: string) {
 
 export const { useUploadThing, uploadFiles } = reactHelpers<Router>();
 
-export const filterStatuses = (givenStatus: ApplicationStatus, statusList: ApplicationStatus[]): ApplicationStatus[] => {
-  const statusOrder: ApplicationStatus[] = ["pending", "processing", "eligible", "not_eligible"];
+export const filterStatuses = (
+  givenStatus: ApplicationStatus,
+  statusList: ApplicationStatus[]
+): ApplicationStatus[] => {
+  const statusOrder: ApplicationStatus[] = [
+    "pending",
+    "processing",
+    "eligible",
+    "not_eligible",
+  ];
   const givenStatusIndex = statusOrder.indexOf(givenStatus);
 
   // Filter out any status that comes before or is the given status itself
-  return statusList.filter((status) => statusOrder.indexOf(status) > givenStatusIndex);
+  return statusList.filter(
+    (status) => statusOrder.indexOf(status) > givenStatusIndex
+  );
 };
+export function extractEmails(text) {
+  const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+  const extractedEmails = text.match(emailRegex) || [];
+  return extractedEmails.join(", ");
+}

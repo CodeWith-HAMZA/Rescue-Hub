@@ -35,6 +35,27 @@ export default function CheckIsOnboarded({ user }: { user: User }) {
   ) {
     return null;
   }
+  if (currentUser.data?.onBoarded === "0")
+    return (
+      <div className="m-3">
+        <Alert variant="default">
+          <AlertCircle className="h-4 w-4 " />
+          <AlertTitle className="text-lg -mt-2">
+            You Are Not On Boarded, Complete Your {""}
+          </AlertTitle>
+          <AlertDescription>
+            You Are not supposed to do any Actions. Please Complete Your Profile
+            &nbsp;
+            <Link
+              href={`/onboarding/continue/?${encryptedUser}`}
+              className="underline hover:opacity-50"
+            >
+              Onboard
+            </Link>
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
 
   if (currentUser.data?.onBoarded === "-1")
     return (
@@ -52,24 +73,4 @@ export default function CheckIsOnboarded({ user }: { user: User }) {
       </div>
     );
   return null;
-  return (
-    <div className="m-3">
-      <Alert variant="default">
-        <AlertCircle className="h-4 w-4 " />
-        <AlertTitle className="text-lg -mt-2">
-          You Are Not On Boarded, Complete Your {""}
-        </AlertTitle>
-        <AlertDescription>
-          You Are not supposed to do any Actions. Please Complete Your Profile
-          &nbsp;
-          <Link
-            href={`/onboarding/continue/?${encryptedUser}`}
-            className="underline hover:opacity-50"
-          >
-            Onboard
-          </Link>
-        </AlertDescription>
-      </Alert>
-    </div>
-  );
 }

@@ -39,9 +39,11 @@ export const useCreateApplication = () => {
           console.log(error);
         }
       }
-      const emailOrCNIC = application.contactEmail;
+      const email = application.contactEmail;
+
+      const cnic = application.cnic;
       application.contactEmail = user?.emailAddresses[0].emailAddress
-        ? `Primary Email: ${user?.emailAddresses[0].emailAddress}, Email/CNIC: ${emailOrCNIC}`
+        ? `Primary Email: ${user?.emailAddresses[0].emailAddress}, Email: ${email}, Cnic: ${cnic}`
         : emailOrCNIC;
 
       return await createApplication({
