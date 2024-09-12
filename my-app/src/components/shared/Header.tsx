@@ -19,6 +19,7 @@ export default function Header({ children }: { children: ReactNode }) {
       {/* <Navbar /> */}
       <Links />
       {children}
+      {/* hey */}
       {/* <AuthProfile></AuthProfile> */}
     </div>
   );

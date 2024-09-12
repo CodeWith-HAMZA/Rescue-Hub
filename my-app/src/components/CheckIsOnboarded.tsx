@@ -41,7 +41,7 @@ export default function CheckIsOnboarded({ user }: { user: User }) {
         <Alert variant="default">
           <AlertCircle className="h-4 w-4 " />
           <AlertTitle className="text-lg -mt-2">
-            You Are Not On Boarded, Complete Your {""}
+            You Are Not On Boarded, Complete Your Profile
           </AlertTitle>
           <AlertDescription>
             You Are not supposed to do any Actions. Please Complete Your Profile

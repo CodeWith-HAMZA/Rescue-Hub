@@ -28,7 +28,7 @@ export default function Onboarding({ searchParams }) {
   const [submitting, setSubmitting] = useState(false);
   const password = useRef({});
 
-  const router = useRouter()
+  const router = useRouter();
   const onSubmit = async (data) => {
     try {
       setSubmitting(true);
@@ -45,14 +45,14 @@ export default function Onboarding({ searchParams }) {
         bio: data?.bio,
       } as any);
       setSubmitting(false);
-      toast.success("Successfully Completed Your Profile!")
+      toast.success("Successfully Completed Your Profile!");
       console.log("Form data:", data);
-      router.push("/home")
+      router.push("/home");
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
       setSubmitting(false);
-    } 
+    }
     // Your form submission logic goes here
   };
 
@@ -86,7 +86,7 @@ export default function Onboarding({ searchParams }) {
                 />
                 {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
               </div>
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label htmlFor="fullname">Full Name/Username</Label>
                 <Input
                   id="fullname"
@@ -94,7 +94,7 @@ export default function Onboarding({ searchParams }) {
                   value={searchParams?.fullName}
                   {...register("fullname")}
                 />
-              </div>
+              </div> */}
               {/* <div className="space-y-2">
                 <Label htmlFor="lastname">Last Name</Label>
                 <Input
